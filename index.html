@@ -201,6 +201,29 @@ class="result"
 id="result">
 </div>
 
+<button
+type="button"
+id="formulaBtn"
+onclick="toggleFormula()"
+style="display:none;background:#1976d2;">
+
+計算式を表示
+
+</button>
+
+<div
+id="formula"
+style="
+display:none;
+margin-top:10px;
+padding:12px;
+background:#f3f7ff;
+border-radius:10px;
+line-height:1.8;
+font-size:15px;
+">
+</div>
+
 </div>
 </div>
 
@@ -306,6 +329,33 @@ ecmoBlock.style.display=
 }
 )
 
+ function toggleFormula(){
+
+const formula=
+document.getElementById("formula")
+
+const btn=
+document.getElementById("formulaBtn")
+
+if(formula.style.display==="none"){
+
+formula.style.display="block"
+
+btn.innerHTML=
+"計算式を閉じる"
+
+}else{
+
+formula.style.display="none"
+
+btn.innerHTML=
+"計算式を表示"
+
+}
+
+} 
+
+  
 function calc(){
 
 document.body.className=""
@@ -568,6 +618,56 @@ L<br><br>
 ${text}`
 
 }
+
+ const formula=
+document.getElementById("formula")
+
+const formulaBtn=
+document.getElementById("formulaBtn")
+
+formulaBtn.style.display=
+"block"
+
+formula.style.display=
+"none"
+
+formulaBtn.innerHTML=
+"計算式を表示"
+
+formula.innerHTML=`
+
+＜計算根拠＞
+
+使用可能残量<br>
+
+((${pressure}-2)
+÷14.7)
+×${cyl}
+
+=
+${remain.toFixed(0)}L
+
+<br><br>
+
+酸素消費量<br>
+
+${oxygenFlow.toFixed(2)}
+L/min
+
+<br><br>
+
+使用可能時間<br>
+
+${remain.toFixed(0)}
+÷
+${oxygenFlow.toFixed(2)}
+÷2
+
+=
+
+${text}
+
+` 
 
 </script>
 
