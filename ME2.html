@@ -1,0 +1,591 @@
+```html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>酸素管理アプリ（ME専用）</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+padding:16px;
+background:#f7f7f7;
+transition:0.5s;
+}
+
+body.safe{
+background:linear-gradient(135deg,#64b5f6,#90caf9);
+}
+
+body.warning{
+background:linear-gradient(135deg,#fff176,#ffd54f);
+}
+
+body.danger{
+background:linear-gradient(135deg,#ff4d4d,#ff0000);
+}
+
+.container{
+max-width:700px;
+margin:auto;
+}
+
+.card{
+background:white;
+border-radius:14px;
+padding:18px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+.result{
+margin-top:12px;
+padding:12px;
+background:#ffffffee;
+border-radius:10px;
+font-weight:bold;
+}
+
+label{
+display:block;
+margin-top:10px;
+font-weight:bold;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:4px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+#mode{
+font-size:18px;
+padding:14px;
+height:52px;
+}
+
+#safe{
+background:#eee;
+font-weight:bold;
+}
+
+button{
+margin-top:14px;
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#43a047;
+color:white;
+font-size:18px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+<div class="card">
+
+<h2>酸素管理アプリ（ME専用）</h2>
+
+<label>モード</label>
+
+<select id="mode">
+
+<option value="" selected disabled>
+選択してください
+</option>
+
+<option value="normal">
+カニューレ・マスク
+</option>
+
+<option value="nppv">
+NPPV
+</option>
+
+<option value="vent">
+呼吸器
+</option>
+
+<option value="hfnc">
+ネーザルハイフロー
+</option>
+
+<option value="ecmo">
+ECMO
+</option>
+
+</select>
+
+<label>ボンベ容量</label>
+
+<select id="cylinder">
+<option value="500">500 L</option>
+<option value="1500">1500 L</option>
+</select>
+
+<label>ボンベ圧 (MPa)</label>
+<input id="pressure" type="number">
+
+<div id="commonFlow" style="display:none;">
+
+<label id="flowLabel">
+流量
+</label>
+
+<input id="flow" type="number">
+
+</div>
+
+<div id="ecmoBlock" style="display:none;">
+
+<label>
+ECMO流量 (L/min)
+</label>
+
+<input id="ecmoFlow" type="number">
+
+</div>
+
+<div id="fio2Block" style="display:none;">
+
+<label>
+FiO2 (%)
+</label>
+
+<input
+id="fio2"
+type="number"
+min="21"
+max="100">
+
+</div>
+
+<div id="leakBlock" style="display:none;">
+
+<label>
+リーク量 (L/min)
+</label>
+
+<input id="leak" type="number">
+
+</div>
+
+<label>
+安全係数
+</label>
+
+<input
+id="safe"
+value="2"
+disabled>
+
+<button onclick="calc()">
+
+計算
+
+</button>
+
+<div
+class="result"
+id="result">
+</div>
+
+</div>
+</div>
+
+<script>
+
+const FULL_PRESSURE=14.7
+
+const mode=
+document.getElementById("mode")
+
+const common=
+document.getElementById("commonFlow")
+
+const fio2Block=
+document.getElementById("fio2Block")
+
+const leakBlock=
+document.getElementById("leakBlock")
+
+const ecmoBlock=
+document.getElementById("ecmoBlock")
+
+mode.addEventListener(
+"change",
+()=>{
+
+document.getElementById("flow").value=""
+document.getElementById("fio2").value=""
+document.getElementById("leak").value=""
+document.getElementById("ecmoFlow").value=""
+
+fio2Block.style.display="none"
+leakBlock.style.display="none"
+ecmoBlock.style.display="none"
+
+let label=
+document.getElementById("flowLabel")
+
+let m=
+mode.value
+
+common.style.display=
+m==="ecmo"
+?"none"
+:"block"
+
+if(m==="normal"){
+
+label.textContent=
+"酸素流量 (L/min)"
+
+}
+
+else if(
+m==="nppv"
+){
+
+fio2Block.style.display=
+"block"
+
+leakBlock.style.display=
+"block"
+
+label.textContent=
+"分時換気量 (L/min)"
+
+}
+
+else if(
+m==="vent"
+){
+
+fio2Block.style.display=
+"block"
+
+label.textContent=
+"分時換気量 (L/min)"
+
+}
+
+else if(
+m==="hfnc"
+){
+
+fio2Block.style.display=
+"block"
+
+label.textContent=
+"流量 (L/min)"
+
+}
+
+else{
+
+fio2Block.style.display=
+"block"
+
+ecmoBlock.style.display=
+"block"
+
+}
+
+}
+)
+
+function calc(){
+
+document.body.className=""
+
+let result=
+document.getElementById("result")
+
+let mode=
+document.getElementById("mode").value
+
+let pressure=
+parseFloat(
+document.getElementById("pressure").value
+)
+
+let mv=
+parseFloat(
+document.getElementById("flow").value
+)
+
+let cyl=
+parseFloat(
+document.getElementById("cylinder").value
+)
+
+let leak=
+parseFloat(
+document.getElementById("leak").value
+||0
+)
+
+let ecmo=
+parseFloat(
+document.getElementById("ecmoFlow").value
+)
+
+let fio2Input=
+parseFloat(
+document.getElementById("fio2").value
+)
+
+if(!mode){
+result.innerHTML=
+"モード選択してください"
+return
+}
+
+if(isNaN(pressure)){
+result.innerHTML=
+"圧力入力してください"
+return
+}
+
+if(
+pressure<=2
+){
+document.body.classList.add(
+"danger"
+)
+
+result.innerHTML=
+"交換基準以下です"
+
+return
+}
+
+if(
+mode!=="ecmo"
+&&
+isNaN(mv)
+){
+
+result.innerHTML=
+"流量入力してください"
+
+return
+
+}
+
+if(
+mode==="ecmo"
+&&
+isNaN(ecmo)
+){
+
+result.innerHTML=
+"ECMO流量入力してください"
+
+return
+
+}
+
+if(
+mode!=="normal"
+){
+
+if(
+isNaN(fio2Input)
+||
+fio2Input<21
+||
+fio2Input>100
+){
+
+result.innerHTML=
+"FiO2は21〜100%"
+
+return
+
+}
+
+}
+
+let fio2=
+mode==="normal"
+?0.21
+:fio2Input/100
+
+let ratio=
+Math.max(
+0,
+(fio2-0.21)/0.79
+)
+
+let oxygenFlow
+
+if(
+mode==="normal"
+){
+
+oxygenFlow=mv
+
+}
+
+else if(
+mode==="nppv"
+){
+
+oxygenFlow=
+(mv+leak)
+*
+ratio
+
+}
+
+else if(
+mode==="ecmo"
+){
+
+oxygenFlow=
+ecmo
+*
+ratio
+
+}
+
+else{
+
+oxygenFlow=
+mv
+*
+ratio
+
+}
+
+if(
+oxygenFlow<=0
+||
+!isFinite(
+oxygenFlow
+)
+){
+
+result.innerHTML=
+"入力値エラー"
+
+return
+
+}
+
+let usable=
+
+(
+(pressure-2)
+/
+FULL_PRESSURE
+)
+*
+cyl
+
+let remain=
+
+(
+pressure
+/
+FULL_PRESSURE
+)
+*
+cyl
+
+let time=
+usable
+/
+oxygenFlow
+
+if(
+time<=10
+){
+
+document.body.classList.add(
+"danger"
+)
+
+}
+else if(
+time<=20
+){
+
+document.body.classList.add(
+"warning"
+)
+
+}
+else{
+
+document.body.classList.add(
+"safe"
+)
+
+}
+
+let total=
+Math.floor(
+time*60
+)
+
+let hour=
+Math.floor(
+total/3600
+)
+
+let min=
+Math.floor(
+(
+total%3600
+)
+/60
+)
+
+let sec=
+total%60
+
+let text=
+
+hour>0
+
+?
+
+`${hour}時間 ${min}分`
+
+:
+
+`${min}分 ${sec}秒`
+
+result.innerHTML=
+
+`酸素消費量:
+${oxygenFlow.toFixed(2)}
+L/min<br>
+
+残量:
+${remain.toFixed(0)}
+L<br>
+
+使用可能時間:
+${text}`
+
+}
+
+</script>
+
+</body>
+</html>
+```
