@@ -201,15 +201,31 @@ class="result"
 id="result">
 </div>
 
-<button
-type="button"
+<button onclick="calc()">
+
+計算
+
+</button>
+
+<div
+class="result"
+id="result">
+</div>
+
+<div
 id="formulaBtn"
 onclick="toggleFormula()"
-style="display:none;background:#1976d2;">
+style="
+display:none;
+margin-top:8px;
+font-size:13px;
+color:#777;
+cursor:pointer;
+">
 
 計算式を表示
 
-</button>
+</div>
 
 <div
 id="formula"
@@ -222,6 +238,9 @@ border-radius:10px;
 line-height:1.8;
 font-size:15px;
 ">
+</div>
+
+</div>
 </div>
 
 </div>
@@ -329,7 +348,7 @@ ecmoBlock.style.display=
 }
 )
 
- function toggleFormula(){
+function toggleFormula(){
 
 const formula=
 document.getElementById("formula")
@@ -337,24 +356,27 @@ document.getElementById("formula")
 const btn=
 document.getElementById("formulaBtn")
 
-if(formula.style.display==="none"){
+if(
+formula.style.display==="none"
+){
 
-formula.style.display="block"
+formula.style.display=
+"block"
 
-btn.innerHTML=
+btn.textContent=
 "計算式を閉じる"
 
 }else{
 
-formula.style.display="none"
+formula.style.display=
+"none"
 
-btn.innerHTML=
+btn.textContent=
 "計算式を表示"
 
 }
 
-} 
-
+}
   
 function calc(){
 
