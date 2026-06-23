@@ -625,9 +625,59 @@ L<br><br>
 使用可能時間:
 ${text}`
 
- const formula=
+
+const formula=
 document.getElementById("formula")
 
+const formulaBtn=
+document.getElementById("formulaBtn")
+
+formulaBtn.style.display=
+"block"
+
+formula.style.display=
+"none"
+
+formulaBtn.textContent=
+"計算式を表示"
+
+formula.innerHTML=`
+
+＜計算根拠＞
+
+使用可能残量<br>
+
+((${pressure}-2)
+÷14.7)
+×${cyl}
+
+=
+${remain.toFixed(0)}L
+
+<br><br>
+
+酸素消費量<br>
+
+${oxygenFlow.toFixed(2)}
+L/min
+
+<br><br>
+
+使用可能時間<br>
+
+${remain.toFixed(0)}
+÷
+${oxygenFlow.toFixed(2)}
+÷2
+
+=
+
+${text}
+
+`
+
+}
+  
 const formulaBtn=
 document.getElementById("formulaBtn")
 
@@ -674,7 +724,8 @@ ${oxygenFlow.toFixed(2)}
 ${text}
 
 ` 
-｝
+}
+  
 
 </script>
 
