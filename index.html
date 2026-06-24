@@ -251,88 +251,56 @@ document.getElementById("leakBlock")
 const ecmoBlock=
 document.getElementById("ecmoBlock")
 
-mode.addEventListener(
-"change",
-()=>{
+mode.addEventListener("change", function(){
 
-document.getElementById("flow").value=""
-document.getElementById("fio2").value=""
-document.getElementById("leak").value=""
-document.getElementById("ecmoFlow").value=""
+// 値リセット
+document.getElementById("flow").value="";
+document.getElementById("fio2").value="";
+document.getElementById("leak").value="";
+document.getElementById("ecmoFlow").value="";
 
-fio2Block.style.display="none"
-leakBlock.style.display="none"
-ecmoBlock.style.display="none"
+// 一旦全部非表示
+common.style.display="none";
+fio2Block.style.display="none";
+leakBlock.style.display="none";
+ecmoBlock.style.display="none";
 
-let label=
-document.getElementById("flowLabel")
+const label=document.getElementById("flowLabel");
 
-let m=
-mode.value
+switch(this.value){
 
-common.style.display=
-m==="ecmo"
-?"none"
-:"block"
+case "normal":
+common.style.display="block";
+label.textContent="酸素流量（L/min）";
+break;
 
-if(m==="normal"){
+case "nppv":
+common.style.display="block";
+fio2Block.style.display="block";
+leakBlock.style.display="block";
+label.textContent="分時換気量（L/min）";
+break;
 
-label.textContent=
-"酸素流量（L/min）"
+case "vent":
+common.style.display="block";
+fio2Block.style.display="block";
+label.textContent="分時換気量（L/min）";
+break;
 
-}
+case "hfnc":
+common.style.display="block";
+fio2Block.style.display="block";
+label.textContent="流量（L/min）";
+break;
 
-else if(
-m==="nppv"
-){
-
-fio2Block.style.display=
-"block"
-
-leakBlock.style.display=
-"block"
-
-label.textContent=
-"分時換気量（L/min）"
-
-}
-
-else if(
-m==="vent"
-){
-
-fio2Block.style.display=
-"block"
-
-label.textContent=
-"分時換気量（L/min）"
+case "ecmo":
+fio2Block.style.display="block";
+ecmoBlock.style.display="block";
+break;
 
 }
 
-else if(
-m==="hfnc"
-){
-
-fio2Block.style.display=
-"block"
-
-label.textContent=
-"流量（L/min）"
-
-}
-
-else{
-
-fio2Block.style.display=
-"block"
-
-ecmoBlock.style.display=
-"block"
-
-}
-
-}
-)
+});
 
 function toggleFormula(){
 
@@ -371,9 +339,9 @@ document.body.className=""
 let result=
 document.getElementById("result")
 
-let mode=
+let selectedMode=
 document.getElementById("mode").value
-
+  
 let pressure=
 parseFloat(
 document.getElementById("pressure").value
