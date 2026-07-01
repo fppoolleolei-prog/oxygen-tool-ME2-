@@ -617,6 +617,19 @@ total/60
 let min=
 total%60
 
+const now = new Date();
+
+const expire = new Date(
+    now.getTime() + total * 60000
+);
+
+const expireText =
+    expire.getFullYear() + "/" +
+    (expire.getMonth()+1) + "/" +
+    expire.getDate() + " " +
+    String(expire.getHours()).padStart(2,"0") + ":" +
+    String(expire.getMinutes()).padStart(2,"0");  
+
 let text=
 
 hour>0
@@ -635,8 +648,13 @@ L/min<br><br>
 ${remain.toFixed(0)}
 L<br><br>
 
-使用可能時間:
-${text}`
+使用可能時間：
+${text}
+
+<br><br>
+
+使用可能期限：
+${expireText}
 
 const formula=
 document.getElementById("formula")
