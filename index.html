@@ -63,7 +63,7 @@ border:1px solid #ccc;
 box-sizing:border-box;
 }
 
-#selectedMode{
+#mode{
 font-size:18px;
 padding:14px;
 height:52px;
@@ -337,7 +337,6 @@ label.textContent="流量（L/min）";
 break;
 
 case "ecmo":
-fio2Block.style.display="block";
 ecmoBlock.style.display="block";
 break;
 
@@ -468,7 +467,8 @@ return
 }
 
 if(
-selectedMode!=="normal"
+selectedMode!=="normal"&&
+selectedMode!=="ecmo"
 ){
 
 if(
@@ -523,10 +523,7 @@ else if(
 selectedMode==="ecmo"
 ){
 
-oxygenFlow=
-ecmo
-*
-ratio
+oxygenFlow=ecmo
 
 }
 
@@ -575,32 +572,25 @@ oxygenFlow
 /
 safety
 
-if(
-time<=6
-){
 
-document.body.classList.add(
-"danger"
+let status = "";
 
-)
+if(time < 0.5){
+
+    document.body.classList.add("danger");
+    status = "🔴 緊急交換推奨";
 
 }
-else if(
-time<=12
-){
+else if(time < 1){
 
-document.body.classList.add(
-"warning"
-
-)
+    document.body.classList.add("warning");
+    status = "🟡 交換準備";
 
 }
 else{
 
-document.body.classList.add(
-"safe"
-
-)
+    document.body.classList.add("safe");
+    status = "🔵 使用可能";
 
 }
 
@@ -640,23 +630,29 @@ hour>0
 
 result.innerHTML=
 
-`酸素消費量:
-${oxygenFlow.toFixed(2)}
-L/min<br><br>
+`
+<b>判定：</b> ${status}
 
-使用可能残量:
-${remain.toFixed(0)}
-L<br><br>
+<hr>
 
-使用可能時間：
+<b>酸素消費量：</b>
+${oxygenFlow.toFixed(2)} L/min
+
+<br><br>
+
+<b>使用可能残量：</b>
+${remain.toFixed(0)} L
+
+<br><br>
+
+<b>使用可能時間：</b>
 ${text}
 
 <br><br>
 
-使用可能期限：
+<b>使用可能期限：</b>
 ${expireText}
 `;
-
   
 const formula=
 document.getElementById("formula")
