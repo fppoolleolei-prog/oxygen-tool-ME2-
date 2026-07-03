@@ -63,7 +63,7 @@ border:1px solid #ccc;
 box-sizing:border-box;
 }
 
-#mode{
+#selectedMode{
 font-size:18px;
 padding:14px;
 height:52px;
@@ -422,7 +422,7 @@ parseFloat(
 document.getElementById("fio2").value
 )
 
-if(!mode){
+if(!selectedMode){
 result.innerHTML="モード選択してください"
 return
 }
@@ -448,7 +448,7 @@ return
 }
 
 if(
-mode!=="ecmo"
+selectedMode!=="ecmo"
 &&
 isNaN(mv)
 ){
@@ -458,7 +458,7 @@ return
 }
 
 if(
-mode==="ecmo"
+selectedMode==="ecmo"
 &&
 isNaN(ecmo)
 ){
@@ -468,7 +468,7 @@ return
 }
 
 if(
-mode!=="normal"
+selectedMode!=="normal"
 ){
 
 if(
@@ -488,7 +488,7 @@ return
 }
 
 let fio2=
-mode==="normal"
+selectedMode==="normal"
 ?0.21
 :fio2Input/100
 
@@ -501,7 +501,7 @@ Math.max(
 let oxygenFlow
 
 if(
-mode==="normal"
+selectedMode==="normal"
 ){
 
 oxygenFlow=mv
@@ -509,7 +509,7 @@ oxygenFlow=mv
 }
 
 else if(
-mode==="nppv"
+selectedMode==="nppv"
 ){
 
 oxygenFlow=
@@ -520,7 +520,7 @@ ratio
 }
 
 else if(
-mode==="ecmo"
+selectedMode==="ecmo"
 ){
 
 oxygenFlow=
@@ -655,7 +655,9 @@ ${text}
 
 使用可能期限：
 ${expireText}
+`;
 
+  
 const formula=
 document.getElementById("formula")
 
@@ -702,10 +704,9 @@ ${oxygenFlow.toFixed(2)}
 =
 
 ${text}
+`;
 
-`
-}
-  
+}  
 
 </script>
 
