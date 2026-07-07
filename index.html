@@ -698,12 +698,28 @@ hour>0
 :
 `${min}分`
 
+let machineText = "";
+
+if(selectedMode==="nppv"){
+
+    machineText = `
+    <b>使用機種：</b> ${machine}
+    <br><br>
+    `;
+
+}
+  
 result.innerHTML=
 
 `
 <b>機種：</b> ${machine}
 
 <br><br>
+
+result.innerHTML=`
+
+${machineText}
+
 <b>判定：</b> ${status}
 
 <hr>
