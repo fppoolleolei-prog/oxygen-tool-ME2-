@@ -321,6 +321,7 @@ common.style.display="none";
 fio2Block.style.display="none";
 leakBlock.style.display="none";
 ecmoBlock.style.display="none";
+document.getElementById("nppvMachine").style.display="none";
 
 const label=document.getElementById("flowLabel");
 
@@ -335,6 +336,7 @@ case "nppv":
 common.style.display="block";
 fio2Block.style.display="block";
 leakBlock.style.display="block";
+document.getElementById("nppvMachine").style.display="block";
 label.textContent="分時換気量（L/min）";
 break;
 
@@ -403,6 +405,9 @@ document.getElementById("result")
 
 let selectedMode=
 document.getElementById("mode").value
+
+let machine=
+document.getElementById("machine").value
   
 let pressure=
 parseFloat(
@@ -531,6 +536,57 @@ oxygenFlow=
 *
 ratio
 
+// リーク補正
+let leakFactor=1;
+
+if(machine==="V60"){
+
+    if(leak<20){
+
+        leakFactor=1.00;
+
+    }else if(leak<40){
+
+        leakFactor=1.05;
+
+    }else if(leak<60){
+
+        leakFactor=1.10;
+
+    }else{
+
+        leakFactor=1.20;
+
+    }
+
+}
+
+if(machine==="NKV330"){
+
+    if(leak<20){
+
+        leakFactor=1.00;
+
+    }else if(leak<40){
+
+        leakFactor=1.03;
+
+    }else if(leak<60){
+
+        leakFactor=1.07;
+
+    }else{
+
+        leakFactor=1.15;
+
+    }
+
+}
+
+oxygenFlow=
+oxygenFlow*
+leakFactor;
+
 }
 
 else if(
@@ -645,6 +701,9 @@ hour>0
 result.innerHTML=
 
 `
+<b>機種：</b> ${machine}
+
+<br><br>
 <b>判定：</b> ${status}
 
 <hr>
