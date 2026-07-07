@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>酸素ボンベ管理アプリ（ME専用）</title>
+<title>ME版 搬送用酸素ボンベ残量シミュレーター</title>
 
 <style>
 
@@ -117,7 +117,7 @@ background:#1565c0;
 <div class="container">
 <div class="card">
 
-<h2>酸素ボンベ管理アプリ（ME専用）</h2>
+<h1>ME版 搬送用酸素ボンベ残量シミュレーター</h1>
 
 <label>モード</label>
 
@@ -148,6 +148,20 @@ ECMO
 </option>
 
 </select>
+
+ <div id="nppvMachine" style="display:none;">
+
+<h3>使用機種</h3>
+
+<select id="machine">
+
+<option value="V60">V60</option>
+
+<option value="NKV330">NKV-330</option>
+
+</select>
+
+</div> 
 
 <label>ボンベ容量</label>
 
