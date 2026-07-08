@@ -709,15 +709,34 @@ if(selectedMode==="nppv"){
 
 }
   
-result.innerHTML=
+result.innerHTML=`
 
-`
-<b>機種：</b> ${machine}
+${machineText}
+
+<b>判定：</b> ${status}
+
+<hr>
+
+<b>酸素消費量：</b>
+${oxygenFlow.toFixed(2)} L/min
 
 <br><br>
 
-result.innerHTML=`
+<b>使用可能残量：</b>
+${remain.toFixed(0)} L
 
+<br><br>
+
+<b>使用可能時間：</b>
+${text}
+
+<br><br>
+
+<b>使用可能期限：</b>
+${expireText}
+
+`;
+  
 ${machineText}
 
 <b>判定：</b> ${status}
