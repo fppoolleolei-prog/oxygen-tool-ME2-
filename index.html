@@ -333,11 +333,12 @@ label.textContent="酸素流量（L/min）";
 break;
 
 case "nppv":
-common.style.display="block";
-fio2Block.style.display="block";
-leakBlock.style.display="block";
-document.getElementById("nppvMachine").style.display="block";
-label.textContent="分時換気量（L/min）";
+common.style.display = "block";
+fio2Block.style.display = "block";
+leakBlock.style.display = "block";
+const machineBlock = document.getElementById("nppvMachine");
+machineBlock.style.display = "block";
+label.textContent = "分時換気量（L/min）";
 break;
 
 case "vent":
@@ -710,32 +711,6 @@ if(selectedMode==="nppv"){
 }
   
 result.innerHTML=`
-
-${machineText}
-
-<b>判定：</b> ${status}
-
-<hr>
-
-<b>酸素消費量：</b>
-${oxygenFlow.toFixed(2)} L/min
-
-<br><br>
-
-<b>使用可能残量：</b>
-${remain.toFixed(0)} L
-
-<br><br>
-
-<b>使用可能時間：</b>
-${text}
-
-<br><br>
-
-<b>使用可能期限：</b>
-${expireText}
-
-`;
   
 ${machineText}
 
