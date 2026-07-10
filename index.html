@@ -540,10 +540,10 @@ else if(
 selectedMode==="nppv"
 ){
 
-oxygenFlow=
-(mv+leak)
-*
-ratio
+oxygenFlow =
+(mv * ratio)
++
+(leak * ratio * 0.5);
 
 // リーク補正
 let leakFactor=1;
