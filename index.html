@@ -278,7 +278,7 @@ cursor:pointer;
 text-decoration:underline;
 font-weight:bold;
 ">
-計算式を表示
+計算方法を表示
 </div>
   
 <div
@@ -385,7 +385,7 @@ formula.style.display=
 "block"
 
 btn.textContent=
-"計算式を閉じる"
+"計算方法を閉じる"
 
 }else{
 
@@ -393,7 +393,7 @@ formula.style.display=
 "none"
 
 btn.textContent=
-"計算式を表示"
+"計算方法を表示"
 
 }
 
@@ -543,7 +543,7 @@ selectedMode==="nppv"
 oxygenFlow =
 (mv * ratio)
 +
-(leak * ratio * 0.5);
+(leak * 0.25);
 
 // リーク補正
 let leakFactor=1;
@@ -758,41 +758,109 @@ formula.style.display=
 "none"
 
 formulaBtn.textContent=
-"計算式を表示"
+"計算方法を表示"
 
+let calcMethod = "";
+
+if(selectedMode==="normal"){
+
+calcMethod=`
+<b>＜酸素消費量＞</b><br>
+酸素流量<br>
+↓<br>
+${oxygenFlow.toFixed(2)} L/min
+`;
+
+}else if(selectedMode==="nppv"){
+
+calcMethod=`
+<b>＜酸素消費量＞</b><br>
+（分時換気量 × FiO₂補正）<br>
+＋<br>
+リーク補正<br>
+↓<br>
+${oxygenFlow.toFixed(2)} L/min
+`;
+
+}else if(selectedMode==="vent"){
+
+calcMethod=`
+<b>＜酸素消費量＞</b><br>
+分時換気量 × FiO₂補正<br>
+↓<br>
+${oxygenFlow.toFixed(2)} L/min
+`;
+
+}else if(selectedMode==="hfnc"){
+
+calcMethod=`
+<b>＜酸素消費量＞</b><br>
+流量 × FiO₂補正<br>
+↓<br>
+${oxygenFlow.toFixed(2)} L/min
+`;
+
+}else if(selectedMode==="ecmo"){
+
+calcMethod=`
+<b>＜酸素消費量＞</b><br>
+ECMO酸素流量<br>
+↓<br>
+${oxygenFlow.toFixed(2)} L/min
+`;
+
+}
+    
 formula.innerHTML=`
 
-＜計算根拠＞
+${calcMethod}
 
-使用可能残量<br>
+<hr>
+
+<b>＜使用可能残量＞</b><br>
 
 ((${pressure}-2)÷14.7)
 ×${cyl}
 
-=
-${remain.toFixed(0)}L
+<br>
+↓
 
-<br><br>
+<br>
 
-酸素消費量<br>
+${remain.toFixed(0)} L
 
-${oxygenFlow.toFixed(2)}
-L/min
+<hr>
 
-<br><br>
+<b>＜使用可能時間＞</b><br>
 
-使用可能時間<br>
+使用可能残量
+÷
+酸素消費量
+÷
+安全係数
+
+<br>
+
+↓
+
+<br>
 
 ${remain.toFixed(0)}
 ÷
 ${oxygenFlow.toFixed(2)}
-÷2
+÷
+2
 
-=
+<br>
+
+↓
+
+<br>
 
 ${text}
-`;
 
+`;
+    
 }  
 
 </script>
