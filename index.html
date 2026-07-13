@@ -819,17 +819,39 @@ ${calcMethod}
 
 <b>＜使用可能残量＞</b><br>
 
-((${pressure}-2)÷14.7)
-×${cyl}
-
+（ボンベ圧 − 安全係数）
 <br>
+÷
+<br>
+満タン圧
+<br>
+×
+<br>
+ボンベ容量
+
+<br><br>
+
 ↓
 
+<br><br>
+
+(${pressure}-2)
 <br>
+÷
+<br>
+14.7
+<br>
+×
+<br>
+${cyl}
+
+<br><br>
+
+↓
+
+<br><br>
 
 ${remain.toFixed(0)} L
-
-<hr>
 
 <b>＜使用可能時間＞</b><br>
 
