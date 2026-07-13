@@ -320,6 +320,27 @@ ECMO酸素流量（L/min）
 
 </div>
 
+<label>
+安全係数
+</label>
+
+<input
+id="safe"
+value="2"
+disabled>
+
+<button onclick="calc()">
+
+計算
+
+</button>
+
+<div
+class="result"
+id="result">
+</div>
+
+    
 <div id="ecmoInfo" style="display:none;">
 
 <hr>
@@ -678,25 +699,6 @@ max="100">
 
 </div>
 
-<label>
-安全係数
-</label>
-
-<input
-id="safe"
-value="2"
-disabled>
-
-<button onclick="calc()">
-
-計算
-
-</button>
-
-<div
-class="result"
-id="result">
-</div>
 
 <div
 id="formulaBtn"
