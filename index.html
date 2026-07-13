@@ -222,6 +222,132 @@ ECMO酸素流量（L/min）
 
 </div>
 
+<div id="ecmoInfo" style="display:none;margin-top:20px;">
+
+<hr>
+
+<h3>大学病院情報共有</h3>
+
+<p>
+
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSe9dYE1bN92H1A1dzzJViMbF2KN3FFWus80SWn8F3WCyLhvIQ/viewform?pli=1"
+
+target="_blank">
+
+Googleフォームを開く
+
+</a>
+
+</p>
+
+<h3>連絡先</h3>
+
+<p>
+
+平日日中
+
+<br>
+
+<a href="tel:0172395457">
+
+0172-39-5457
+
+</a>
+
+</p>
+
+<p>
+
+夜間休日
+
+<br>
+
+<a href="tel:0172395314">
+
+0172-39-5314
+
+</a>
+
+</p>
+
+<hr>
+
+<details>
+
+<summary>
+
+ECMO搬送チェックリスト（タップで開く）
+
+</summary>
+
+<label>
+
+<input type="checkbox">
+
+ECMO回路確認
+
+</label>
+
+<label>
+
+<input type="checkbox">
+
+人工肺確認
+
+</label>
+
+<label>
+
+<input type="checkbox">
+
+ガス流量確認
+
+</label>
+
+<label>
+
+<input type="checkbox">
+
+FiO₂確認
+
+</label>
+
+<label>
+
+<input type="checkbox">
+
+酸素ボンベ残量確認
+
+</label>
+
+<label>
+
+<input type="checkbox">
+
+バッテリー確認
+
+</label>
+
+<label>
+
+<input type="checkbox">
+
+大学病院へ連絡済み
+
+</label>
+
+<label>
+
+<input type="checkbox">
+
+Googleフォーム入力済み
+
+</label>
+
+</details>
+
+</div>
+
 <div id="fio2Block" style="display:none;">
 
 <label>
@@ -331,6 +457,8 @@ leakBlock.style.display="none";
 ecmoBlock.style.display="none";
 document.getElementById("nppvMachine").style.display="none";
 
+document.getElementById("ecmoInfo").style.display="none";
+
 const label=document.getElementById("flowLabel");
 
 switch(this.value){
@@ -362,7 +490,11 @@ label.textContent="流量（L/min）";
 break;
 
 case "ecmo":
+
 ecmoBlock.style.display="block";
+
+document.getElementById("ecmoInfo").style.display="block";
+
 break;
 
 }
