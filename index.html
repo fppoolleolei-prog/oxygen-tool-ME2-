@@ -907,9 +907,7 @@ ${oxygenFlow.toFixed(2)} L/min
 
 calcMethod=`
 <b>＜酸素消費量＞</b><br>
-（分時換気量 × FiO₂補正）<br>
-＋<br>
-リーク補正<br>
+（分時換気量 × FiO₂補正）＋ リーク補正<br>
 ↓<br>
 ${oxygenFlow.toFixed(2)} L/min
 `;
@@ -952,7 +950,7 @@ ${calcMethod}
 
 <b>＜使用可能残量＞</b><br>
 
-（ボンベ圧 − 安全係数）÷満タン圧×ボンベ容量
+（ボンベ圧 − 安全係数）÷ 満タン圧 × ボンベ容量
 
 <br>
 
@@ -963,14 +961,17 @@ ${calcMethod}
 (${pressure}-2)÷14.7×${cyl}
 
 <br>
+
 ↓
+
+<br>
 
 ${remain.toFixed(0)} L
 <br>
 
 <b>＜使用可能時間＞</b><br>
 
-使用可能残量÷酸素消費量÷安全係数
+使用可能残量 ÷ 酸素消費量 ÷ 安全係数
 
 <br>
 
