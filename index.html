@@ -935,6 +935,7 @@ ${oxygenFlow.toFixed(2)} L/min
 }else if(selectedMode==="ecmo"){
 
 calcMethod=`
+
 <b>＜酸素消費量＞</b><br>
 ECMO酸素流量<br>
 ↓<br>
@@ -951,47 +952,25 @@ ${calcMethod}
 
 <b>＜使用可能残量＞</b><br>
 
-（ボンベ圧 − 安全係数）
-<br>
-÷
-<br>
-満タン圧
-<br>
-×
-<br>
-ボンベ容量
+（ボンベ圧 − 安全係数）÷満タン圧×ボンベ容量
 
-<br><br>
+<br>
 
 ↓
 
-<br><br>
+<br>
 
-(${pressure}-2)
-<br>
-÷
-<br>
-14.7
-<br>
-×
-<br>
-${cyl}
+(${pressure}-2)÷14.7×${cyl}
 
-<br><br>
-
+<br>
 ↓
-
-<br><br>
 
 ${remain.toFixed(0)} L
+<br>
 
 <b>＜使用可能時間＞</b><br>
 
-使用可能残量
-÷
-酸素消費量
-÷
-安全係数
+使用可能残量÷酸素消費量÷安全係数
 
 <br>
 
