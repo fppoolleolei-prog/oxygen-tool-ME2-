@@ -115,6 +115,90 @@ background:#1565c0;
     margin-bottom:2px;
     font-size:18px;
 }
+
+#ecmoInfo{
+
+margin-top:20px;
+
+}
+
+#checkBtn{
+
+margin-top:15px;
+
+padding:12px;
+
+background:#1976d2;
+
+color:white;
+
+text-align:center;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+}
+
+#checkBtn:hover{
+
+background:#1565c0;
+
+}
+
+#checkList{
+
+display:none;
+
+margin-top:15px;
+
+}
+
+.checkCard{
+
+background:white;
+
+border-left:6px solid #4caf50;
+
+border-radius:10px;
+
+padding:15px;
+
+margin-bottom:15px;
+
+box-shadow:0 3px 8px rgba(0,0,0,0.1);
+
+transition:0.3s;
+
+}
+
+.checkCard.done{
+
+background:#e8f5e9;
+
+}
+
+.checkTitle{
+
+font-size:18px;
+
+font-weight:bold;
+
+margin-bottom:8px;
+
+}
+
+.checkNote{
+
+font-size:14px;
+
+color:#555;
+
+margin-top:8px;
+
+}
   
 </style>
 
@@ -222,16 +306,15 @@ ECMO酸素流量（L/min）
 
 </div>
 
-<div id="ecmoInfo" style="display:none;margin-top:20px;">
+<div id="ecmoInfo" style="display:none;">
 
 <hr>
 
-<h3>大学病院情報共有</h3>
+<h3>🏥 大学病院情報共有</h3>
 
 <p>
 
 <a href="https://docs.google.com/forms/d/e/1FAIpQLSe9dYE1bN92H1A1dzzJViMbF2KN3FFWus80SWn8F3WCyLhvIQ/viewform?pli=1"
-
 target="_blank">
 
 Googleフォームを開く
@@ -240,13 +323,9 @@ Googleフォームを開く
 
 </p>
 
-<h3>連絡先</h3>
-
 <p>
 
-平日日中
-
-<br>
+☎ 平日日中<br>
 
 <a href="tel:0172395457">
 
@@ -258,9 +337,7 @@ Googleフォームを開く
 
 <p>
 
-夜間休日
-
-<br>
+☎ 夜間休日<br>
 
 <a href="tel:0172395314">
 
@@ -270,83 +347,70 @@ Googleフォームを開く
 
 </p>
 
-<hr>
+<div
+id="checkBtn"
+onclick="toggleChecklist()">
 
-<details>
-
-<summary>
-
-ECMO搬送チェックリスト（タップで開く）
-
-</summary>
-
-<label>
-
-<input type="checkbox">
-
-ECMO回路確認
-
-</label>
-
-<label>
-
-<input type="checkbox">
-
-人工肺確認
-
-</label>
-
-<label>
-
-<input type="checkbox">
-
-ガス流量確認
-
-</label>
-
-<label>
-
-<input type="checkbox">
-
-FiO₂確認
-
-</label>
-
-<label>
-
-<input type="checkbox">
-
-酸素ボンベ残量確認
-
-</label>
-
-<label>
-
-<input type="checkbox">
-
-バッテリー確認
-
-</label>
-
-<label>
-
-<input type="checkbox">
-
-大学病院へ連絡済み
-
-</label>
-
-<label>
-
-<input type="checkbox">
-
-Googleフォーム入力済み
-
-</label>
-
-</details>
+ECMO搬送チェックリストを表示
 
 </div>
+
+<div id="checkList">
+
+<div class="checkCard">
+
+<label>
+
+<input type="checkbox">
+
+<span class="checkTitle">
+
+① プライミングライン
+
+</span>
+
+</label>
+
+<div class="checkNote">
+
+三方活栓は閉じているか
+
+</div>
+
+</div>
+
+   <div class="checkCard">
+
+<label>
+
+<input type="checkbox">
+
+<span class="checkTitle">
+
+② 気泡検出機能付き流量計
+
+</span>
+
+</label>
+
+<div class="checkNote">
+
+送血回路（人工肺後）についているか
+
+<br>
+
+※流れの向きも確認
+
+</div>
+
+</div>
+
+    
+
+</div>
+
+</div>
+
 
 <div id="fio2Block" style="display:none;">
 
@@ -456,7 +520,6 @@ fio2Block.style.display="none";
 leakBlock.style.display="none";
 ecmoBlock.style.display="none";
 document.getElementById("nppvMachine").style.display="none";
-
 document.getElementById("ecmoInfo").style.display="none";
 
 const label=document.getElementById("flowLabel");
@@ -490,11 +553,8 @@ label.textContent="流量（L/min）";
 break;
 
 case "ecmo":
-
 ecmoBlock.style.display="block";
-
 document.getElementById("ecmoInfo").style.display="block";
-
 break;
 
 }
@@ -502,6 +562,28 @@ break;
 });
 
 function toggleFormula(){
+
+function toggleChecklist(){
+
+const list=document.getElementById("checkList");
+
+const btn=document.getElementById("checkBtn");
+
+if(list.style.display==="block"){
+
+list.style.display="none";
+
+btn.textContent="ECMO搬送チェックリストを表示";
+
+}else{
+
+list.style.display="block";
+
+btn.textContent="ECMO搬送チェックリストを閉じる";
+
+}
+
+}
 
 const formula=
 document.getElementById("formula")
