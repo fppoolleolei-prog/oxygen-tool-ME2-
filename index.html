@@ -199,6 +199,18 @@ color:#555;
 margin-top:8px;
 
 }
+
+.checkCard.green{
+border-left-color:#4caf50;
+}
+
+.checkCard.blue{
+border-left-color:#2196f3;
+}
+
+.checkCard.orange{
+border-left-color:#ff9800;
+}
   
 </style>
 
@@ -385,7 +397,9 @@ onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
 
 <label>
 
-<input type="checkbox">
+<input
+type="checkbox"
+onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
 
 <span class="checkTitle">
 
@@ -1267,7 +1281,7 @@ ${calcMethod}
 
 ${remain.toFixed(0)} L
 <br>
-calcMethod=`
+
     
 <b>＜使用可能時間＞</b><br>
 
