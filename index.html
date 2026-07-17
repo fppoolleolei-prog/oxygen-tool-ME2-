@@ -77,12 +77,26 @@ background:#eee;
 font-weight:bold;
 }
 
-button{
+.calcBtn{
 width:100%;
 padding:18px;
 font-size:22px;
 font-weight:bold;
+border:none;
 border-radius:12px;
+background:#1976d2;
+color:white;
+cursor:pointer;
+transition:0.3s;
+margin-top:15px;
+}
+
+.calcBtn:hover{
+background:#1565c0;
+}
+
+button:hover{
+background:#1565c0;
 }
 
 .pressureBtns{
@@ -465,10 +479,8 @@ id="safe"
 value="2"
 disabled>
 
-<button onclick="calc()">
-
+<button class="calcBtn" onclick="calc()">
 計算
-
 </button>
 
 <div
