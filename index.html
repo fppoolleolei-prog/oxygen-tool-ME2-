@@ -213,7 +213,47 @@ border-left-color:#2196f3;
 .checkCard.orange{
 border-left-color:#ff9800;
 }
-  
+
+.resultTitle{
+    font-size:18px;
+    color:#666;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+.resultTime{
+    font-size:48px;
+    font-weight:bold;
+    color:#0d47a1;
+}
+
+.emptyTitle{
+    margin-top:20px;
+    font-size:18px;
+    color:#666;
+    font-weight:bold;
+}
+
+.emptyTime{
+    font-size:38px;
+    font-weight:bold;
+    color:#d32f2f;
+    margin-top:5px;
+}
+
+.remainTitle{
+    margin-top:20px;
+    font-size:18px;
+    color:#666;
+    font-weight:bold;
+}
+
+.remainValue{
+    font-size:32px;
+    font-weight:bold;
+    color:#2e7d32;
+}
+    
 </style>
 
 </head>
@@ -1180,31 +1220,36 @@ if(selectedMode==="nppv"){
 
 }
   
-result.innerHTML=`
-  
+result.innerHTML = `
+
 ${machineText}
 
-<b>判定：</b> ${status}
+<div class="resultTitle">
+残り使用時間
+</div>
 
-<hr>
-
-<b>酸素消費量：</b>
-${oxygenFlow.toFixed(2)} L/min
-
-<br><br>
-
-<b>使用可能残量：</b>
-${remain.toFixed(0)} L
-
-<br><br>
-
-<b>使用可能時間：</b>
+<div class="resultTime">
 ${text}
+</div>
 
-<br><br>
+<div class="emptyTitle">
+使用可能期限
+</div>
 
-<b>使用可能期限：</b>
+<div class="emptyTime">
 ${expireText}
+</div>
+
+${status}
+
+<div class="remainTitle">
+使用可能残量
+</div>
+
+<div class="remainValue">
+${remain.toFixed(0)} L
+</div>
+
 `;
   
 const formula=
