@@ -78,19 +78,23 @@ font-weight:bold;
 }
 
 .calcBtn{
-width:100%;
-padding:18px;
-font-size:22px;
-font-weight:bold;
-border:none;
-border-radius:12px;
-background:#1976d2;
-color:white;
-cursor:pointer;
-transition:0.3s;
-margin-top:15px;
+    width:100%;
+    padding:18px;
+    font-size:22px;
+    font-weight:bold;
+    border:none;
+    border-radius:12px;
+    background:#1976d2;
+    color:white;
+    cursor:pointer;
+    transition:0.2s;
+    margin-top:15px;
+    box-shadow:0 4px 10px rgba(0,0,0,.2);
 }
 
+.calcBtn:active{
+    transform:scale(.98);
+}
 .calcBtn:hover{
 background:#1565c0;
 }
@@ -124,89 +128,54 @@ background:#1565c0;
 }
 
 #ecmoInfo{
-
 margin-top:20px;
-
 }
 
 #checkBtn{
-
 margin-top:15px;
-
 padding:12px;
-
 background:#ff9800;
-
 color:white;
-
 text-align:center;
-
 border-radius:10px;
-
 cursor:pointer;
-
 font-weight:bold;
-
 transition:0.2s;
-
 }
 
 #checkBtn:hover{
-
 background:#f57c00;
-
 }
 
 #checkList{
-
 display:none;
-
 margin-top:15px;
-
 }
 
 .checkCard{
-
 background:white;
-
 border-left:6px solid #4caf50;
-
 border-radius:10px;
-
 padding:15px;
-
 margin-bottom:15px;
-
 box-shadow:0 3px 8px rgba(0,0,0,0.1);
-
 transition:0.3s;
-
 }
 
 .checkCard.done{
-
 background:#e8f5e9;
-
 }
 
 .checkTitle{
-
 font-size:18px;
-
 font-weight:bold;
-
 margin-bottom:8px;
-
 }
 
 .checkNote{
-
 font-size:14px;
-
 color:#555;
-
 margin-top:8px;
-
 }
 
 .checkCard.green{
@@ -290,6 +259,13 @@ color:#1565c0;
     
 </style>
 
+h1{
+    text-align:center;
+    font-size:30px;
+    margin-bottom:25px;
+    color:#1565c0;
+}
+    
 </head>
 
 <body>
