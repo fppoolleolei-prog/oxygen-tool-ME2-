@@ -1164,18 +1164,20 @@ let status = "";
 
 if(time < 0.5){
 
-status='<span class="status danger">🚨 交換推奨</span>';
+    status='<span class="status danger">🚨 交換してください</span>';
+    document.body.classList.add("danger");
 
 }else if(time < 1){
 
-status='<span class="status warning">⚠️ 交換準備</span>';
+    status='<span class="status warning">⚠️ 交換準備</span>';
+    document.body.classList.add("warning");
 
 }else{
 
-status='<span class="status safe">✅ 使用可能</span>';
-
+    status='<span class="status safe">✅ 使用可能</span>';
+    // 背景は変更しない
 }
-
+    
 let total=
 Math.floor(
 time*60
@@ -1209,21 +1211,8 @@ hour>0
 `${hour}時間 ${min}分`
 :
 `${min}分`
-
-let machineText = "";
-
-if(selectedMode==="nppv"){
-
-    machineText = `
-    <b>使用機種：</b> ${machine}
-    <br><br>
-    `;
-
-}
   
 result.innerHTML = `
-
-${machineText}
 
 ${status}
 
