@@ -53,6 +53,8 @@ ME版 搬送用酸素ボンベ残量シミュレーター
 
 </title>
 
+<style>
+
 /*======================================================
  ① 共通設定
 ======================================================*/
@@ -1266,7 +1268,9 @@ text-align:center;
 
 id="formulaBtn"
 
-onclick="toggleFormula()">
+onclick="toggleFormula()"
+
+style="display:none;">
 
 計算方法を表示
 
@@ -1276,7 +1280,9 @@ onclick="toggleFormula()">
 
 <div
 
-id="formula">
+id="formula"
+
+style="display:none;">
 
 </div>
 
@@ -1848,9 +1854,8 @@ document.getElementById("fio2").value
 const leak =
 parseFloat(
 document.getElementById("leak").value
-||0
+||20
 );
-
 
 
 const machine =
