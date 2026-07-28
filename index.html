@@ -413,7 +413,7 @@ color:#666;
 
 .resultTime{
 
-font-size:56px;
+font-size:40px;
 
 font-weight:bold;
 
@@ -447,6 +447,18 @@ color:#2e7d32;
 
 }
 
+
+.emptyTime{
+
+font-size:40px;
+
+font-weight:bold;
+
+color:#1565c0;
+
+margin:12px 0;
+
+}
 
 /*======================================================
  ⑨ 計算方法表示
@@ -575,7 +587,17 @@ border-left:
 }
 
 
+.footer{
 
+text-align:center;
+
+font-size:13px;
+
+color:#777;
+
+margin-top:25px;
+
+}
 
 
 /*====================================================
@@ -614,7 +636,7 @@ font-size:24px;
 
 .resultTime{
 
-font-size:46px;
+font-size:36px;
 
 }
 
@@ -661,19 +683,6 @@ ME版<br>
 搬送用酸素ボンベ残量シミュレーター
 
 </h1>
-
-
-<div class="subTitle">
-
-酸素ボンベ残量計算ツール Ver2.0.0
-
-<br>
-
-最終更新：2026/07/28
-
-</div>
-
-
 
 
 <!--====================================================
@@ -2188,18 +2197,6 @@ time*60*60*1000
 
 const expireText =
 
-expire.getFullYear()
-+
-"/"
-+
-(expire.getMonth()+1)
-+
-"/"
-+
-expire.getDate()
-+
-" "
-+
 String(expire.getHours())
 .padStart(2,"0")
 +
@@ -2207,7 +2204,6 @@ String(expire.getHours())
 +
 String(expire.getMinutes())
 .padStart(2,"0");
-
 
 
 
@@ -2450,6 +2446,18 @@ ${oxygenFlow.toFixed(2)}
 
 
 }
+
+
+<div class="footer">
+
+酸素ボンベ残量計算ツール Ver2.0.0
+<br>
+最終更新：2026/07/28
+
+</div>
+
+
+</div>
 
 </script>
 
