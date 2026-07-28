@@ -1,21 +1,70 @@
 <!DOCTYPE html>
 <html lang="ja">
+
+<!--
+=========================================================
+  ME版 搬送用酸素ボンベ残量シミュレーター
+  Tsugaru General Hospital
+  Ver 2.0.0
+---------------------------------------------------------
+  作成者：
+  更新日：2026/07/28
+=========================================================
+
+【目次】
+
+ ① CSSデザイン設定
+ ② タイトル
+ ③ モード選択
+ ④ ボンベ設定
+ ⑤ 入力項目
+ ⑥ ECMO情報
+ ⑦ 計算結果
+ ⑧ 計算方法
+ ⑨ JavaScript
+
+JavaScript
+
+ 9-1 初期設定
+ 9-2 モード切替
+ 9-3 ボタン
+ 9-4 入力チェック
+ 9-5 酸素消費量計算
+ 9-6 使用可能残量計算
+ 9-7 使用時間計算
+ 9-8 使用期限計算
+ 9-9 結果表示
+ 9-10 計算方法表示
+ 9-11 ECMOチェックリスト
+=========================================================
+-->
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ME版 搬送用酸素ボンベ残量シミュレーター</title>
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<style>
+<title>
+
+ME版 搬送用酸素ボンベ残量シミュレーター
+
+</title>
+
+/*======================================================
+ ① 共通設定
+======================================================*/
 
 :root{
 
 --main:#1976d2;
 --mainDark:#1565c0;
 
---safe:#2e7d32;
---warn:#ef6c00;
---danger:#c62828;
+--safe:#43a047;
+--warning:#fb8c00;
+--danger:#e53935;
 
 --card:#ffffff;
 --border:#d7e3f3;
@@ -23,77 +72,83 @@
 
 }
 
-*{
-box-sizing:border-box;
-}
+/*======================================================
+ ② Body
+======================================================*/
 
 body{
 
 font-family:"Yu Gothic UI",Meiryo,sans-serif;
+
 margin:0;
+
 padding:18px;
+
 background:var(--bg);
+
 transition:.3s;
+
 color:#333;
 
 }
 
+/*======================================================
+ ③ 背景色
+======================================================*/
+
 body.warning{
 
-background:#fff8d6;
+background:#fff7d1;
 
 }
 
 body.danger{
 
-background:#ffdcdc;
+background:#ffe0e0;
 
 }
+
+/*======================================================
+ ④ レイアウト
+======================================================*/
 
 .container{
 
 max-width:720px;
+
 margin:auto;
 
 }
 
 .card{
 
-background:#fff;
+background:white;
+
 border-radius:18px;
+
 padding:22px;
-box-shadow:0 8px 24px rgba(0,0,0,.08);
+
+box-shadow:0 8px 20px rgba(0,0,0,.08);
 
 }
 
-h1{
-
-text-align:center;
-font-size:28px;
-line-height:1.35;
-color:var(--main);
-margin:0 0 20px;
-
-}
-
-.subTitle{
-
-text-align:center;
-font-size:14px;
-color:#666;
-margin-top:-12px;
-margin-bottom:20px;
-
-}
+/*======================================================
+ ⑤ 入力欄
+======================================================*/
 
 label{
 
 display:block;
-font-size:17px;
-font-weight:bold;
-color:var(--main);
+
 margin-top:15px;
+
 margin-bottom:6px;
+
+font-size:17px;
+
+font-weight:bold;
+
+color:var(--main);
 
 }
 
@@ -101,11 +156,17 @@ input,
 select{
 
 width:100%;
+
 padding:16px;
+
 font-size:18px;
+
 border:2px solid var(--border);
+
 border-radius:12px;
+
 background:white;
+
 transition:.2s;
 
 }
@@ -114,32 +175,39 @@ input:focus,
 select:focus{
 
 outline:none;
+
 border-color:var(--main);
+
 box-shadow:0 0 0 4px rgba(25,118,210,.15);
 
 }
 
-#mode{
-
-font-size:20px;
-font-weight:bold;
-border:2px solid var(--main);
-background:#f7fbff;
-
-}
+/*======================================================
+ ⑥ ボタン
+======================================================*/
 
 .calcBtn{
 
 width:100%;
+
 padding:18px;
-font-size:22px;
-font-weight:bold;
-background:var(--main);
-color:white;
-border:none;
-border-radius:14px;
-cursor:pointer;
+
 margin-top:20px;
+
+font-size:22px;
+
+font-weight:bold;
+
+border:none;
+
+border-radius:14px;
+
+background:var(--main);
+
+color:white;
+
+cursor:pointer;
+
 transition:.2s;
 
 }
@@ -156,46 +224,116 @@ transform:scale(.98);
 
 }
 
-.pressureBtns{
+/*======================================================
+ ⑦ ECMOチェックリスト
+======================================================*/
 
-display:flex;
-gap:10px;
-margin-top:10px;
+#checkBtn{
 
-}
+background:#ff9800;
 
-.miniBtn{
-
-flex:1;
-padding:14px;
-font-size:17px;
-font-weight:bold;
-border:none;
-border-radius:10px;
-background:var(--main);
 color:white;
+
+padding:16px;
+
+margin-top:18px;
+
+border-radius:12px;
+
+font-size:18px;
+
+font-weight:bold;
+
+text-align:center;
+
 cursor:pointer;
+
 transition:.2s;
 
 }
 
-.miniBtn:hover{
+#checkBtn:hover{
 
-background:var(--mainDark);
+background:#ef6c00;
 
 }
+
+#checkList{
+
+display:none;
+
+margin-top:15px;
+
+}
+
+.checkCard{
+
+background:white;
+
+border-left:6px solid #1976d2;
+
+padding:15px;
+
+margin-bottom:12px;
+
+border-radius:10px;
+
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+transition:.2s;
+
+}
+
+.checkCard.done{
+
+background:#e8f5e9;
+
+border-left-color:#4caf50;
+
+}
+
+.checkTitle{
+
+font-size:18px;
+
+font-weight:bold;
+
+}
+
+.checkNote{
+
+margin-top:8px;
+
+font-size:15px;
+
+color:#555;
+
+line-height:1.6;
+
+}
+
+/*======================================================
+ ⑧ 計算結果表示
+======================================================*/
 
 .result{
 
 margin-top:22px;
+
 padding:22px;
+
 border-radius:18px;
+
 background:#f8fbff;
+
 border:2px solid #d8e6f7;
+
 text-align:center;
+
 display:none;
 
 }
+
 
 .result.show{
 
@@ -203,113 +341,114 @@ display:block;
 
 }
 
-.result hr{
-
-border:none;
-border-top:1px solid #dbe4ef;
-margin:18px 0;
-
-}
-
-.status{
-
-display:inline-block;
-padding:12px 28px;
-border-radius:40px;
-font-size:30px;
-font-weight:bold;
-margin-bottom:20px;
-
-}
-
-.status.safe{
-
-background:#e8f5e9;
-color:var(--safe);
-
-}
-
-.status.warning{
-
-background:#fff3e0;
-color:var(--warn);
-
-}
-
-.status.danger{
-
-background:#ffebee;
-color:var(--danger);
-
-}
-
-.result.safe{
-
-border-left:8px solid #4caf50;
-
-}
-
-.result.warning{
-
-border-left:8px solid #ff9800;
-
-}
-
-.result.danger{
-
-border-left:8px solid #e53935;
-
-} 
 
 .resultTitle{
 
 font-size:18px;
+
 font-weight:bold;
+
 color:#666;
 
 }
 
+
 .resultTime{
-    font-size:56px;
-    font-weight:bold;
-    color:#1565c0;
-    margin:12px 0;
-}
 
-.emptyTime{
+font-size:56px;
 
-font-size:28px;
 font-weight:bold;
 
+color:#1565c0;
+
+margin:12px 0;
+
 }
+
 
 .remainTitle{
 
 margin-top:18px;
+
 font-size:18px;
+
 font-weight:bold;
+
 color:#666;
 
 }
 
+
 .remainValue{
 
 font-size:32px;
+
 font-weight:bold;
+
 color:#2e7d32;
 
 }
 
 
-    
+/*======================================================
+ ⑨ 計算方法表示
+======================================================*/
+
+
+#formulaBtn{
+
+margin-top:12px;
+
+font-size:14px;
+
+color:#1976d2;
+
+cursor:pointer;
+
+text-decoration:underline;
+
+font-weight:bold;
+
+}
+
+
+#formula{
+
+margin-top:10px;
+
+padding:12px;
+
+background:#f3f7ff;
+
+border-radius:10px;
+
+line-height:1.8;
+
+font-size:15px;
+
+}
+
 </style>
-    
+
 </head>
 
-<body>
+ <body>
+
 
 <div class="container">
+
+
 <div class="card">
+
+
+
+<!--====================================================
+ ① タイトル
+
+  変更する場合はここ
+
+====================================================-->
+
 
 <h1>
 
@@ -319,165 +458,510 @@ ME版<br>
 
 </h1>
 
-<label>モード</label>
+
+<div class="subTitle">
+
+酸素ボンベ残量計算ツール Ver2.0
+
+</div>
+
+
+
+
+<!--====================================================
+ ② モード選択
+
+====================================================-->
+
+
+<label>
+
+モード
+
+</label>
+
 
 <select id="mode">
 
+
 <option value="" selected disabled>
+
 選択してください
+
 </option>
+
 
 <option value="normal">
+
 カニューレ・マスク
+
 </option>
+
 
 <option value="nppv">
+
 NPPV
+
 </option>
+
 
 <option value="vent">
+
 呼吸器（レスピ）
+
 </option>
+
 
 <option value="hfnc">
+
 ネーザルハイフロー
+
 </option>
 
+
 <option value="ecmo">
+
 ECMO
+
 </option>
+
 
 </select>
 
- <div id="nppvMachine" style="display:none;">
 
-<h3>使用機種</h3>
+
+
+
+
+<!--====================================================
+ ③ NPPV機種選択
+
+  機種追加はここ
+
+====================================================-->
+
+
+<div id="nppvMachine" style="display:none;">
+
+
+<label>
+
+NPPV使用機種
+
+</label>
+
 
 <select id="machine">
 
-<option value="V60">V60</option>
 
-<option value="NKV330">NKV-330</option>
+<option value="NKV330">
+
+NKV-330
+
+</option>
+
+
+<option value="V60">
+
+V60
+
+</option>
+
 
 </select>
 
-</div> 
 
-<label>ボンベ容量</label>
+</div>
+
+
+
+
+
+
+<!--====================================================
+ ④ ボンベ設定
+
+====================================================-->
+
+
+<label>
+
+ボンベ容量
+
+</label>
+
 
 <select id="cylinder">
-  <option value="300">300 L</option>
-  <option value="500" selected>500 L</option>
-  <option value="1500">1500 L</option>
+
+
+<option value="300">
+
+300 L
+
+</option>
+
+
+<option value="500" selected>
+
+500 L
+
+</option>
+
+
+<option value="1500">
+
+1500 L
+
+</option>
+
+
 </select>
 
-<label>ボンベ圧（MPa）</label>
 
-<input id="pressure" type="number">
+
+
+<label>
+
+ボンベ圧（MPa）
+
+</label>
+
+
+<input
+
+id="pressure"
+
+type="number"
+
+min="0"
+
+max="14.7"
+
+step="0.1"
+
+placeholder="例：10">
+
+
+
+
 
 <div class="pressureBtns">
 
-<button type="button" class="miniBtn"
+
+<button
+
+type="button"
+
+class="miniBtn"
+
 onclick="setPressure(14.7)">
+
 14.7MPa
+
 </button>
 
-<button type="button" class="miniBtn"
+
+<button
+
+type="button"
+
+class="miniBtn"
+
 onclick="setPressure(10)">
+
 10MPa
+
 </button>
 
-<button type="button" class="miniBtn"
+
+<button
+
+type="button"
+
+class="miniBtn"
+
 onclick="setPressure(5)">
+
 5MPa
+
 </button>
+
 
 </div>
+
+
+
+
+
+
+
+<!--====================================================
+ ⑤ 共通流量入力
+
+  カニューレ
+  NPPV
+  呼吸器
+  HFNC
+
+====================================================-->
+
 
 <div id="commonFlow" style="display:none;">
 
+
 <label id="flowLabel">
-酸素流量
+
+酸素流量（L/min）
+
 </label>
 
-<input id="flow" type="number">
+
+
+<input
+
+id="flow"
+
+type="number"
+
+min="0"
+
+step="0.1"
+
+placeholder="入力してください">
+
 
 </div>
 
-<div id="ecmoBlock" style="display:none;">
 
-<label>
-ECMO酸素流量（L/min）
-</label>
 
-<input id="ecmoFlow" type="number">
 
-</div>
+
+
+<!--====================================================
+ ⑥ FiO2入力
+
+  NPPV
+  呼吸器
+  HFNC
+
+====================================================-->
+
 
 <div id="fio2Block" style="display:none;">
 
+
 <label>
-FiO2（%）
+
+FiO₂（%）
+
 </label>
 
+
+
 <input
+
 id="fio2"
+
 type="number"
+
 min="21"
-max="100">
+
+max="100"
+
+step="1"
+
+placeholder="21～100">
+
 
 </div>
+
+
+
+
+
+
+
+<!--====================================================
+ ⑦ リーク入力
+
+  NPPV専用
+
+====================================================-->
+
 
 <div id="leakBlock" style="display:none;">
 
+
 <label>
+
 リーク量（L/min）
+
 </label>
 
-<input id="leak" type="number">
 
-</div>
-
-
-<label>
-安全係数
-</label>
 
 <input
-id="safe"
-value="2"
-disabled>
 
-<button class="calcBtn" onclick="calc()">
-計算
-</button>
+id="leak"
 
-<div
-class="result"
-id="result">
+type="number"
+
+min="0"
+
+step="1"
+
+placeholder="未入力は0">
+
+
 </div>
 
-    
-<div id="ecmoInfo" style="display:none;">
+
+
+
+
+
+
+<!--====================================================
+ ⑧ ECMO入力
+
+====================================================-->
+
+
+<div id="ecmoBlock" style="display:none;">
+
+
+<label>
+
+ECMO酸素流量（L/min）
+
+</label>
+
+
+
+<input
+
+id="ecmoFlow"
+
+type="number"
+
+min="0"
+
+step="0.1"
+
+placeholder="入力してください">
+
+
+</div>
+
+
+
+
+
+
+<!--====================================================
+ ⑨ 安全係数
+
+  基本変更不要
+
+====================================================-->
+
+
+<label>
+
+安全係数
+
+</label>
+
+
+<input
+
+id="safe"
+
+value="2"
+
+disabled>
+
+
+
+
+
+
+<!--====================================================
+ ⑩ 計算ボタン
+
+====================================================-->
+
+
+<button
+
+class="calcBtn"
+
+onclick="calc()">
+
+計算
+
+</button>
+
+
+
+
+
+
+<!--====================================================
+ ⑪ 結果表示
+
+  JavaScriptで表示
+
+====================================================-->
+
+
+<div
+
+id="result"
+
+class="result">
+
+</div>
+
+
+
+
+
+
+
+<!--====================================================
+ ⑫ ECMO情報
+
+====================================================-->
+
+
+<div
+
+id="ecmoInfo"
+
+style="display:none;">
+
+
 
 <hr>
 
-<h3>🏥 弘前大学病院情報共有</h3>
+
+
+<h3>
+
+🏥 ECMO情報
+
+</h3>
+
+
+
 
 <p>
 
-<a href="https://docs.google.com/forms/d/e/1FAIpQLSe9dYE1bN92H1A1dzzJViMbF2KN3FFWus80SWn8F3WCyLhvIQ/viewform?pli=1"
-target="_blank">
+☎ 平日日中
 
-Googleフォームを開く
+<br>
 
-</a>
-
-</p>
-
-<p>
-
-☎ 平日日中<br>
 
 <a href="tel:0172395457">
 
@@ -485,11 +969,18 @@ Googleフォームを開く
 
 </a>
 
+
 </p>
+
+
+
 
 <p>
 
-☎ 夜間休日<br>
+☎ 夜間休日
+
+<br>
+
 
 <a href="tel:0172395314">
 
@@ -497,15 +988,27 @@ Googleフォームを開く
 
 </a>
 
+
 </p>
 
+
+
+
+
+
 <div
+
 id="checkBtn"
+
 onclick="toggleChecklist()">
 
 ECMO搬送チェックリスト
 
 </div>
+
+
+
+
 
 <p style="
 margin-top:8px;
@@ -514,27 +1017,27 @@ color:#666;
 text-align:center;
 ">
 
-※ チェックリストを作成しました。搬送前の確認にご活用ください。
+※チェックリストを作成しました。搬送前の確認にご活用ください。
 
 </p>
 
+
+
+
+
 <div id="checkList">
+
+
 
 <div class="checkCard">
 
-<label>
 
-<input
-type="checkbox"
-onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
+<div class="checkTitle">
 
-<span class="checkTitle">
+□ プライミングライン
 
-① プライミングライン
+</div>
 
-</span>
-
-</label>
 
 <div class="checkNote">
 
@@ -542,744 +1045,1055 @@ onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
 
 </div>
 
+
 </div>
-    
+
+
+
+
 <div class="checkCard">
 
-<label>
 
-<input
-type="checkbox"
-onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
+<div class="checkTitle">
 
-<span class="checkTitle">
+□ 気泡検出機能付き流量計
 
-② 気泡検出機能付き流量計
+</div>
 
-</span>
-
-</label>
 
 <div class="checkNote">
 
 送血回路（人工肺後）についているか
 
-<br>
+</div>
 
-※流れの向きも確認
 
 </div>
 
-</div>
+
 
 
 <div class="checkCard">
 
-<label>
 
-<input
-type="checkbox"
-onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
+<div class="checkTitle">
 
-<span class="checkTitle">
+□ P1～P3 圧力センサ
 
-③ P1～P3 圧力センサ
+</div>
 
-</span>
-
-</label>
 
 <div class="checkNote">
 
-正しく測定できているか
-
-<br>
-
-※プライミング前にゼロ点確認
+ゼロ点確認
 
 </div>
 
-</div>
-
-<div class="checkCard">
-
-<label>
-
-<input
-type="checkbox"
-onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
-
-<span class="checkTitle">
-
-④ 遠心ポンプ回転数
-
-</span>
-
-</label>
-
-<div class="checkNote">
-
-<b style="color:#1565c0;">
-2000～3000 rpm
-</b>
-
-<br>
-
-（最大5000 rpm）
-
-</div>
-
-</div>
-
-<div class="checkCard">
-
-<label>
-
-<input
-type="checkbox"
-onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
-
-<span class="checkTitle">
-
-⑤ 補助循環流量
-
-</span>
-
-</label>
-
-<div class="checkNote">
-
-<b style="color:#1565c0;">
-2～3 L/min
-</b>
-
-<br>
-
-30～50 mL/kg/min
-
-</div>
-
-</div>
-
-<div class="checkCard">
-
-<label>
-
-<input
-type="checkbox"
-onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
-
-<span class="checkTitle">
-
-⑥ ガス流量
-
-</span>
-
-</label>
-
-<div class="checkNote">
-
-目標
-
-<br>
-
-<b style="color:#1565c0;">
-
-血液流量：ガス流量＝1：1
-
-</b>
-
-</div>
-
-</div>
-
-<div class="checkCard">
-
-<label>
-
-<input
-type="checkbox"
-onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
-
-<span class="checkTitle">
-
-⑦ アラーム
-
-</span>
-
-</label>
-
-<div class="checkNote">
-
-気泡検知器・P1～P3
-
-<br>
-
-ONになっているか
-
-</div>
-
-</div>
-
-<div class="checkCard">
-
-<label>
-
-<input
-type="checkbox"
-onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
-
-<span class="checkTitle">
-
-⑧ ACT
-
-</span>
-
-</label>
-
-<div class="checkNote">
-
-<b style="color:#ff9800;">
-
-180～200秒
-
-</b>
-
-<br>
-
-150秒以下にしない
-
-</div>
-
-</div>
-
-<div class="checkCard">
-
-<label>
-
-<input
-type="checkbox"
-onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
-
-<span class="checkTitle">
-
-⑨ PO₂
-
-</span>
-
-</label>
-
-<div class="checkNote">
-
-<b style="color:#ff9800;">
-
-200～400 mmHg
-
-</b>
-
-<br>
-
-SpO₂は右手測定が望ましい
-
-</div>
-
-</div>
-
-    
-
-</div>
 
 </div>
 
 
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!--====================================================
+ ⑬ 計算式表示
+
+====================================================-->
 
 
 <div
+
 id="formulaBtn"
-onclick="toggleFormula()"
-style="
-display:none;
-margin-top:8px;
-font-size:13px;
-color:#1976d2;
-cursor:pointer;
-text-decoration:underline;
-font-weight:bold;
-">
+
+onclick="toggleFormula()">
+
 計算方法を表示
-</div>
-  
-<div
-id="formula"
-style="
-display:none;
-margin-top:10px;
-padding:12px;
-background:#f3f7ff;
-border-radius:10px;
-line-height:1.8;
-font-size:15px;
-">
-</div>
 
 </div>
+
+
+
+<div
+
+id="formula">
+
+</div>
+
+
+
+
+
+</div>
+
+
 </div>
 
 <script>
 
-const FULL_PRESSURE=14.7
 
-const mode=
-document.getElementById("mode")
+/*====================================================
+  JavaScript
 
-const common=
-document.getElementById("commonFlow")
+  ME版 搬送用酸素ボンベ残量シミュレーター Ver2.0
 
-const fio2Block=
-document.getElementById("fio2Block")
+====================================================*/
 
-const leakBlock=
-document.getElementById("leakBlock")
 
-const ecmoBlock=
-document.getElementById("ecmoBlock")
 
-mode.addEventListener("change", function(){
+/*====================================================
+ ① 定数設定
 
-// 値リセット
+  変更する場合はここ
+
+====================================================*/
+
+
+const FULL_PRESSURE = 14.7;
+
+const SAFETY_PRESSURE = 2;
+
+const SAFETY_FACTOR = 2;
+
+
+
+
+
+/*====================================================
+ ② HTML取得
+
+====================================================*/
+
+
+const mode =
+document.getElementById("mode");
+
+
+const common =
+document.getElementById("commonFlow");
+
+
+const fio2Block =
+document.getElementById("fio2Block");
+
+
+const leakBlock =
+document.getElementById("leakBlock");
+
+
+const ecmoBlock =
+document.getElementById("ecmoBlock");
+
+
+const result =
+document.getElementById("result");
+
+
+
+
+
+/*====================================================
+ ③ モード変更
+
+====================================================*/
+
+
+mode.addEventListener(
+"change",
+function(){
+
+
+
+// 入力リセット
+
 document.getElementById("flow").value="";
+
 document.getElementById("fio2").value="";
+
 document.getElementById("leak").value="";
+
 document.getElementById("ecmoFlow").value="";
 
-// 一旦全部非表示
-common.style.display="none";
-fio2Block.style.display="none";
-leakBlock.style.display="none";
-ecmoBlock.style.display="none";
-document.getElementById("nppvMachine").style.display="none";
-document.getElementById("ecmoInfo").style.display="none";
 
-const label=document.getElementById("flowLabel");
+
+
+// 全部非表示
+
+common.style.display="none";
+
+fio2Block.style.display="none";
+
+leakBlock.style.display="none";
+
+ecmoBlock.style.display="none";
+
+
+document.getElementById("nppvMachine")
+.style.display="none";
+
+
+document.getElementById("ecmoInfo")
+.style.display="none";
+
+
+
+
+const label =
+document.getElementById("flowLabel");
+
+
+
 
 switch(this.value){
 
+
+
 case "normal":
+
+
 common.style.display="block";
-label.textContent="酸素流量（L/min）";
+
+label.textContent =
+"酸素流量（L/min）";
+
+
 break;
+
+
+
 
 case "nppv":
-common.style.display = "block";
-fio2Block.style.display = "block";
-leakBlock.style.display = "block";
-const machineBlock = document.getElementById("nppvMachine");
-machineBlock.style.display = "block";
-label.textContent = "分時換気量（L/min）";
+
+
+common.style.display="block";
+
+fio2Block.style.display="block";
+
+leakBlock.style.display="block";
+
+
+document.getElementById("nppvMachine")
+.style.display="block";
+
+
+label.textContent =
+"分時換気量（L/min）";
+
+
 break;
+
+
+
 
 case "vent":
+
+
 common.style.display="block";
+
 fio2Block.style.display="block";
-label.textContent="分時換気量（L/min）";
+
+
+label.textContent =
+"分時換気量（L/min）";
+
+
 break;
+
+
+
 
 case "hfnc":
+
+
 common.style.display="block";
+
 fio2Block.style.display="block";
-label.textContent="流量（L/min）";
+
+
+label.textContent =
+"流量（L/min）";
+
+
 break;
+
+
+
 
 case "ecmo":
+
+
 ecmoBlock.style.display="block";
-document.getElementById("ecmoInfo").style.display="block";
+
+
+document.getElementById("ecmoInfo")
+.style.display="block";
+
+
 break;
 
+
 }
+
 
 });
 
-function toggleChecklist(){
-
-const list=document.getElementById("checkList");
-
-const btn=document.getElementById("checkBtn");
-
-if(list.style.display==="block"){
-
-list.style.display="none";
-
-btn.textContent="ECMO搬送チェックリストを表示";
-
-}else{
-
-list.style.display="block";
-
-btn.textContent="ECMO搬送チェックリストを閉じる";
-
-}
-    
-}
 
 
-    
-function toggleFormula(){
 
-const formula=
-document.getElementById("formula")
 
-const btn=
-document.getElementById("formulaBtn")
 
-if(
-formula.style.display==="none"
-){
+/*====================================================
+ ④ 圧力ボタン
 
-formula.style.display=
-"block"
+====================================================*/
 
-btn.textContent=
-"計算方法を閉じる"
-
-}else{
-
-formula.style.display=
-"none"
-
-btn.textContent=
-"計算方法を表示"
-
-}
-
-}
 
 function setPressure(value){
 
-document.getElementById("pressure").value = value;
+
+document.getElementById("pressure")
+.value=value;
+
 
 }
-  
-function calc(){
 
-document.body.className=""
 
-result.className="result";
-result.classList.add("show");
 
-let result=
-document.getElementById("result")
 
-let selectedMode=
-document.getElementById("mode").value
 
-let machine=
-document.getElementById("machine").value
-  
-let pressure=
-parseFloat(
-document.getElementById("pressure").value
-)
 
-let mv=
-parseFloat(
-document.getElementById("flow").value
-)
+/*====================================================
+ ⑤ ECMOチェックリスト表示
 
-let cyl=
-parseFloat(
-document.getElementById("cylinder").value
-)
+====================================================*/
 
-let leak=
-parseFloat(
-document.getElementById("leak").value
-||0
-)
 
-let ecmo=
-parseFloat(
-document.getElementById("ecmoFlow").value
-)
+function toggleChecklist(){
 
-let fio2Input=
-parseFloat(
-document.getElementById("fio2").value
-)
 
-if(!selectedMode){
-result.innerHTML="モード選択してください"
-return
+const list =
+document.getElementById("checkList");
+
+
+const btn =
+document.getElementById("checkBtn");
+
+
+
+if(list.style.display==="block"){
+
+
+list.style.display="none";
+
+
+btn.textContent =
+"ECMO搬送チェックリスト";
+
+
+}else{
+
+
+list.style.display="block";
+
+
+btn.textContent =
+"ECMO搬送チェックリストを閉じる";
+
+
 }
 
-if(isNaN(pressure)){
-result.innerHTML="圧力入力してください"
-return
+
 }
 
-if(
-pressure<=2
+
+
+
+
+
+/*====================================================
+ ⑥ 計算式表示
+
+====================================================*/
+
+
+function toggleFormula(){
+
+
+const formula =
+document.getElementById("formula");
+
+
+const btn =
+document.getElementById("formulaBtn");
+
+
+
+if(formula.style.display==="block"){
+
+
+formula.style.display="none";
+
+
+btn.textContent =
+"計算方法を表示";
+
+
+
+}else{
+
+
+formula.style.display="block";
+
+
+btn.textContent =
+"計算方法を閉じる";
+
+
+}
+
+
+
+}
+
+/*====================================================
+ ⑦ 酸素消費量計算
+
+  ★計算式変更はここを編集★
+
+====================================================*/
+
+
+function calcOxygenFlow(
+mode,
+mv,
+fio2,
+leak,
+machine,
+ecmo
 ){
 
-document.body.classList.add(
-"danger"
-)
 
-result.innerHTML=
-"⚠ ボンベ交換基準以下です（2MPa以下）"
 
-return
-
-}
-
-if(
-selectedMode!=="ecmo"
-&&
-isNaN(mv)
-){
-result.innerHTML=
-"流量入力してください"
-return
-}
-
-if(
-selectedMode==="ecmo"
-&&
-isNaN(ecmo)
-){
-result.innerHTML=
-"ECMO流量入力してください"
-return
-}
-
-if(
-selectedMode!=="normal"&&
-selectedMode!=="ecmo"
-){
-
-if(
-isNaN(fio2Input)
-||
-fio2Input<21
-||
-fio2Input>100
-){
-
-result.innerHTML=
-"FiO2は21〜100%"
-return
-
-}
-
-}
-
-let fio2=
-selectedMode==="normal"
-?0.21
-:fio2Input/100
-
-let ratio=
+const ratio =
 Math.max(
 0,
 (fio2-0.21)/0.79
-)
+);
 
-let oxygenFlow
 
-if(
-selectedMode==="normal"
-){
 
-oxygenFlow=mv
+
+/*--------------------------------
+ カニューレ・マスク
+--------------------------------*/
+
+
+if(mode==="normal"){
+
+
+return mv;
+
 
 }
 
-else if(
-selectedMode==="nppv"
-){
 
-oxygenFlow =
+
+
+/*--------------------------------
+ NPPV
+
+ 分時換気量
+ +
+ リーク補正
+
+--------------------------------*/
+
+
+if(mode==="nppv"){
+
+
+
+let flow =
+
 (mv * ratio)
 +
 (leak * 0.25);
 
-// リーク補正
-let leakFactor=1;
+
+
+let factor=1;
+
+
+
 
 if(machine==="V60"){
 
-    if(leak<20){
 
-        leakFactor=1.00;
+if(leak>=60){
 
-    }else if(leak<40){
+factor=1.20;
 
-        leakFactor=1.05;
 
-    }else if(leak<60){
+}else if(leak>=40){
 
-        leakFactor=1.10;
 
-    }else{
+factor=1.10;
 
-        leakFactor=1.20;
 
-    }
+}else if(leak>=20){
+
+
+factor=1.05;
+
 
 }
+
+
+
+}
+
+
+
 
 if(machine==="NKV330"){
 
-    if(leak<20){
 
-        leakFactor=1.00;
+if(leak>=60){
 
-    }else if(leak<40){
 
-        leakFactor=1.03;
+factor=1.15;
 
-    }else if(leak<60){
 
-        leakFactor=1.07;
+}else if(leak>=40){
 
-    }else{
 
-        leakFactor=1.15;
+factor=1.07;
 
-    }
 
-}
+}else if(leak>=20){
 
-oxygenFlow=
-oxygenFlow*
-leakFactor;
+
+factor=1.03;
+
 
 }
 
-else if(
-selectedMode==="ecmo"
-){
 
-oxygenFlow=ecmo
 
 }
 
-else{
 
-oxygenFlow=
-mv
-*
-ratio
+
+
+return flow * factor;
+
+
 
 }
+
+
+
+
+
+/*--------------------------------
+ ECMO
+
+--------------------------------*/
+
+
+if(mode==="ecmo"){
+
+
+return ecmo;
+
+
+}
+
+
+
+
+/*--------------------------------
+ 呼吸器・HFNC
+
+--------------------------------*/
+
+
+return mv * ratio;
+
+
+
+}
+
+
+
+
+
+
+
+/*====================================================
+ ⑧ メイン計算
+
+====================================================*/
+
+
+function calc(){
+
+
+
+document.body.className="";
+
+
+
+result.className="result";
+
+result.classList.add("show");
+
+
+
+
+const selectedMode =
+mode.value;
+
+
+
+
+const pressure =
+parseFloat(
+document.getElementById("pressure").value
+);
+
+
+
+const cylinder =
+parseFloat(
+document.getElementById("cylinder").value
+);
+
+
+
+const mv =
+parseFloat(
+document.getElementById("flow").value
+);
+
+
+
+const fio2Input =
+parseFloat(
+document.getElementById("fio2").value
+);
+
+
+
+const leak =
+parseFloat(
+document.getElementById("leak").value
+||0
+);
+
+
+
+const machine =
+document.getElementById("machine").value;
+
+
+
+
+const ecmo =
+parseFloat(
+document.getElementById("ecmoFlow").value
+);
+
+
+
+
+
+/*====================================================
+  入力確認
+
+====================================================*/
+
+
+if(!selectedMode){
+
+
+result.innerHTML=
+"⚠ モードを選択してください";
+
+
+return;
+
+
+}
+
+
+
+
+if(isNaN(pressure)){
+
+
+result.innerHTML=
+"⚠ ボンベ圧を入力してください";
+
+
+return;
+
+
+}
+
+
+
+if(pressure>14.7){
+
+
+result.innerHTML=
+"⚠ ボンベ圧は14.7MPa以下です";
+
+
+return;
+
+
+}
+
+
+
+
+if(pressure<=2){
+
+
+document.body.classList.add("danger");
+
+
+result.innerHTML=
+"⚠ ボンベ交換基準以下です（2MPa以下）";
+
+
+return;
+
+
+}
+
+
+
+
+if(selectedMode==="ecmo"){
+
+
+
+if(isNaN(ecmo)){
+
+
+result.innerHTML=
+"⚠ ECMO酸素流量を入力してください";
+
+
+return;
+
+
+}
+
+
+}else{
+
+
+if(isNaN(mv)){
+
+
+result.innerHTML=
+"⚠ 流量を入力してください";
+
+
+return;
+
+
+}
+
+
+}
+
+
+
+
+
+
+let fio2 = 0.21;
+
+
+
+if(selectedMode!=="normal"
+&&
+selectedMode!=="ecmo"){
+
+
+
+if(isNaN(fio2Input)
+||
+fio2Input<21
+||
+fio2Input>100){
+
+
+
+result.innerHTML=
+"⚠ FiO₂は21〜100%です";
+
+
+return;
+
+
+}
+
+
+
+fio2 =
+fio2Input/100;
+
+
+}
+
+
+
+
+
+
+/*====================================================
+  酸素消費量
+
+====================================================*/
+
+
+const oxygenFlow =
+
+calcOxygenFlow(
+
+selectedMode,
+
+mv,
+
+fio2,
+
+leak,
+
+machine,
+
+ecmo
+
+);
+
+
+
+
+
 
 if(
 oxygenFlow<=0
 ||
-!isFinite(
-oxygenFlow
-)
+!isFinite(oxygenFlow)
 ){
 
-result.innerHTML=
-"入力値エラー"
 
-return
+result.innerHTML=
+"⚠ 入力値エラー";
+
+
+return;
+
 
 }
 
-let usable=
-(
-(pressure-2)
-/
-FULL_PRESSURE
-)
+
+
+
+
+
+
+/*====================================================
+  使用可能残量
+
+====================================================*/
+
+
+const usable =
+
+((pressure-SAFETY_PRESSURE)
+/FULL_PRESSURE)
 *
-cyl
+cylinder;
 
-let remain=
-usable
 
-let safety=2
 
-let time=
+
+
+
+
+/*====================================================
+  使用時間
+
+====================================================*/
+
+
+const time =
+
 usable
 /
 oxygenFlow
 /
-safety
+SAFETY_FACTOR;
+
+
+
+
+
+
+/*====================================================
+  使用期限
+
+====================================================*/
+
+
+const now =
+new Date();
+
+
+
+const expire =
+new Date(
+now.getTime()
++
+time*60*60*1000
+);
+
+
+
+const expireText =
+
+expire.getFullYear()
++
+"/"
++
+(expire.getMonth()+1)
++
+"/"
++
+expire.getDate()
++
+" "
++
+String(expire.getHours())
+.padStart(2,"0")
++
+":"
++
+String(expire.getMinutes())
+.padStart(2,"0");
+
+
+
+
+
+
+
+/*====================================================
+  判定
+
+====================================================*/
 
 
 let status="";
 
-if(time < 0.5){
 
-    status='<span class="status danger">🚨 交換してください</span>';
 
-    document.body.classList.add("danger");
+if(time<0.5){
 
-    result.className="result danger show";
+
+status=
+'<span class="status danger">🚨交換してください</span>';
+
+
+document.body.classList.add("danger");
+
+
+}else if(time<1){
+
+
+status=
+'<span class="status warning">⚠交換準備</span>';
+
+
+document.body.classList.add("warning");
+
+
+}else{
+
+
+status=
+'<span class="status safe">✅使用可能</span>';
+
 
 }
-else if(time < 1){
 
-    status='<span class="status warning">⚠️　交換準備</span>';
 
-    document.body.classList.add("warning");
 
-    result.className="result warning show";
+
+
+const total =
+Math.floor(time*60);
+
+
+
+const hour =
+Math.floor(total/60);
+
+
+
+const min =
+total%60;
+
+
+
+let remainText;
+
+
+
+if(hour>0){
+
+
+remainText =
+hour+"時間 "+min+"分";
+
+
+}else{
+
+
+remainText =
+min+"分";
+
 
 }
-else{
 
-    status='<span class="status safe">✅ 使用可能</span>';
 
-    result.className="result safe show";
 
-}
-    
-let total=
-Math.floor(
-time*60
-)
 
-let hour=
-Math.floor(
-total/60
-)
 
-let min=
-total%60
+result.innerHTML =
 
-const now = new Date();
-
-const expireText =
-
-String(expire.getHours()).padStart(2,"0")
-+
-":"
-+
-String(expire.getMinutes()).padStart(2,"0");
-
-const expireText =
-    expire.getFullYear() + "/" +
-    (expire.getMonth()+1) + "/" +
-    expire.getDate() + " " +
-    String(expire.getHours()).padStart(2,"0") + ":" +
-    String(expire.getMinutes()).padStart(2,"0");  
-
-let text=
-
-hour>0
-?
-`${hour}時間 ${min}分`
-:
-`${min}分`
-  
-result.innerHTML=`
+`
 
 ${status}
 
+
 <hr>
+
 
 <div class="resultTitle">
 
@@ -1287,13 +2101,18 @@ ${status}
 
 </div>
 
+
+
 <div class="resultTime">
 
-${text}
+${remainText}
 
 </div>
 
+
+
 <hr>
+
 
 <div class="resultTitle">
 
@@ -1301,13 +2120,19 @@ ${text}
 
 </div>
 
+
+
 <div class="emptyTime">
 
 ${expireText}
 
 </div>
 
+
+
 <hr>
+
+
 
 <div class="remainTitle">
 
@@ -1315,138 +2140,95 @@ ${expireText}
 
 </div>
 
+
+
 <div class="remainValue">
 
-${remain.toFixed(0)} L
+${usable.toFixed(0)} L
 
 </div>
 
-`;
-    
 
-  
-const formula=
-document.getElementById("formula")
-
-const formulaBtn=
-document.getElementById("formulaBtn")
-
-formulaBtn.style.display=
-"block"
-
-formula.style.display=
-"none"
-
-formulaBtn.textContent=
-"計算方法を表示"
-
-let calcMethod = "";
-
-if(selectedMode==="normal"){
-
-calcMethod=`
-<b>＜酸素消費量＞</b><br>
-酸素流量<br>
-↓<br>
-${oxygenFlow.toFixed(2)} L/min
 `;
 
-}else if(selectedMode==="nppv"){
 
-calcMethod=`
-<b>＜酸素消費量＞</b><br>
-（分時換気量 × FiO₂補正）＋ リーク補正<br>
-↓<br>
-${oxygenFlow.toFixed(2)} L/min
-`;
 
-}else if(selectedMode==="vent"){
 
-calcMethod=`
-<b>＜酸素消費量＞</b><br>
-分時換気量 × FiO₂補正<br>
-↓<br>
-${oxygenFlow.toFixed(2)} L/min
-`;
 
-}else if(selectedMode==="hfnc"){
 
-calcMethod=`
-<b>＜酸素消費量＞</b><br>
-流量 × FiO₂補正<br>
-↓<br>
-${oxygenFlow.toFixed(2)} L/min
-`;
+/*====================================================
+ 計算式表示
 
-}else if(selectedMode==="ecmo"){
+====================================================*/
 
-calcMethod=`
+
+const formulaBtn =
+document.getElementById("formulaBtn");
+
+
+const formula =
+document.getElementById("formula");
+
+
+
+formulaBtn.style.display="block";
+
+
+formula.innerHTML =
+
+
+`
 
 <b>＜酸素消費量＞</b><br>
-ECMO酸素流量<br>
-↓<br>
-${oxygenFlow.toFixed(2)} L/min
-`;
 
-}
-    
-formula.innerHTML=`
+${oxygenFlow.toFixed(2)}
 
-${calcMethod}
+L/min
+
+
 
 <hr>
 
+
 <b>＜使用可能残量＞</b><br>
 
-（ボンベ圧 − 安全係数）÷ 満タン圧 × ボンベ容量
+(ボンベ圧-2)÷14.7×容量
 
-<br>
 
-↓
+<br><br>
 
-<br>
 
-(${pressure}-2)÷14.7×${cyl}
+${usable.toFixed(0)} L
 
-<br>
 
-↓
 
-<br>
+<hr>
 
-${remain.toFixed(0)} L
-<br>
 
-    
 <b>＜使用可能時間＞</b><br>
 
-使用可能残量 ÷ 酸素消費量 ÷ 安全係数
+使用可能残量÷酸素消費量÷安全係数
 
-<br>
 
-↓
+<br><br>
 
-<br>
 
-${remain.toFixed(0)}
+${usable.toFixed(0)}
+
 ÷
+
 ${oxygenFlow.toFixed(2)}
-÷
-2
 
-<br>
+÷2
 
-↓
 
-<br>
-
-${text}
 
 `;
-    
-}  
+
+
+
+}
 
 </script>
 
-</body>
-</html>
+
