@@ -428,6 +428,152 @@ font-size:15px;
 
 }
 
+/*====================================================
+ ⑫ 判定表示
+
+====================================================*/
+
+
+.status{
+
+display:inline-block;
+
+padding:12px 28px;
+
+border-radius:40px;
+
+font-size:30px;
+
+font-weight:bold;
+
+margin-bottom:20px;
+
+}
+
+
+
+.status.safe{
+
+background:#e8f5e9;
+
+color:#2e7d32;
+
+}
+
+
+
+.status.warning{
+
+background:#fff3e0;
+
+color:#ef6c00;
+
+}
+
+
+
+.status.danger{
+
+background:#ffebee;
+
+color:#c62828;
+
+}
+
+
+
+/*====================================================
+ ⑬ 結果カード色
+
+====================================================*/
+
+
+.result.safe{
+
+border-left:
+
+8px solid #4caf50;
+
+}
+
+
+
+.result.warning{
+
+border-left:
+
+8px solid #ff9800;
+
+}
+
+
+
+.result.danger{
+
+border-left:
+
+8px solid #e53935;
+
+}
+
+
+
+
+
+/*====================================================
+ ⑭ スマホ調整
+
+====================================================*/
+
+
+@media(max-width:600px){
+
+
+
+body{
+
+padding:10px;
+
+}
+
+
+
+.card{
+
+padding:16px;
+
+}
+
+
+
+h1{
+
+font-size:24px;
+
+}
+
+
+
+.resultTime{
+
+font-size:46px;
+
+}
+
+
+
+.status{
+
+font-size:24px;
+
+padding:10px 20px;
+
+}
+
+
+
+}
+  
 </style>
 
 </head>
@@ -461,7 +607,11 @@ ME版<br>
 
 <div class="subTitle">
 
-酸素ボンベ残量計算ツール Ver2.0
+酸素ボンベ残量計算ツール Ver2.0.0
+
+<br>
+
+最終更新：2026/07/28
 
 </div>
 
@@ -2017,31 +2167,42 @@ if(time<0.5){
 
 
 status=
-'<span class="status danger">🚨交換してください</span>';
+'<span class="status danger">🚨 交換してください</span>';
 
 
 document.body.classList.add("danger");
+
+result.className=
+"result danger show";
+
 
 
 }else if(time<1){
 
 
 status=
-'<span class="status warning">⚠交換準備</span>';
+'<span class="status warning">⚠ 交換準備</span>';
 
 
 document.body.classList.add("warning");
+
+result.className=
+"result warning show";
+
 
 
 }else{
 
 
 status=
-'<span class="status safe">✅使用可能</span>';
+'<span class="status safe">✅ 使用可能</span>';
+
+
+result.className=
+"result safe show";
 
 
 }
-
 
 
 
@@ -2230,5 +2391,9 @@ ${oxygenFlow.toFixed(2)}
 }
 
 </script>
+
+</body>
+
+</html>
 
 
