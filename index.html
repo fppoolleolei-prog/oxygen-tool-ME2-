@@ -243,6 +243,24 @@ color:var(--danger);
 
 }
 
+.result.safe{
+
+border-left:8px solid #4caf50;
+
+}
+
+.result.warning{
+
+border-left:8px solid #ff9800;
+
+}
+
+.result.danger{
+
+border-left:8px solid #e53935;
+
+} 
+
 .resultTitle{
 
 font-size:18px;
@@ -252,16 +270,15 @@ color:#666;
 }
 
 .resultTime{
-
-font-size:48px;
-font-weight:bold;
-color:#1565c0;
-
+    font-size:56px;
+    font-weight:bold;
+    color:#1565c0;
+    margin:12px 0;
 }
 
 .emptyTime{
 
-font-size:26px;
+font-size:28px;
 font-weight:bold;
 
 }
@@ -277,7 +294,7 @@ color:#666;
 
 .remainValue{
 
-font-size:28px;
+font-size:32px;
 font-weight:bold;
 color:#2e7d32;
 
@@ -946,6 +963,9 @@ function calc(){
 
 document.body.className=""
 
+result.className="result";
+result.classList.add("show");
+
 let result=
 document.getElementById("result")
 
@@ -1189,22 +1209,32 @@ oxygenFlow
 safety
 
 
-let status = "";
+let status="";
 
 if(time < 0.5){
 
     status='<span class="status danger">🚨 交換してください</span>';
+
     document.body.classList.add("danger");
 
-}else if(time < 1){
+    result.className="result danger show";
 
-    status='<span class="status warning">⚠️ 交換準備</span>';
+}
+else if(time < 1){
+
+    status='<span class="status warning">⚠️　交換準備</span>';
+
     document.body.classList.add("warning");
 
-}else{
+    result.className="result warning show";
+
+}
+else{
 
     status='<span class="status safe">✅ 使用可能</span>';
-    // 背景は変更しない
+
+    result.className="result safe show";
+
 }
     
 let total=
@@ -1222,9 +1252,13 @@ total%60
 
 const now = new Date();
 
-const expire = new Date(
-    now.getTime() + total * 60000
-);
+const expireText =
+
+String(expire.getHours()).padStart(2,"0")
++
+":"
++
+String(expire.getMinutes()).padStart(2,"0");
 
 const expireText =
     expire.getFullYear() + "/" +
@@ -1241,35 +1275,55 @@ hour>0
 :
 `${min}分`
   
-result.innerHTML = `
+result.innerHTML=`
 
 ${status}
 
+<hr>
+
 <div class="resultTitle">
+
 残り使用時間
+
 </div>
 
 <div class="resultTime">
+
 ${text}
+
 </div>
 
-<div class="emptyTitle">
+<hr>
+
+<div class="resultTitle">
+
 使用可能期限
+
 </div>
 
 <div class="emptyTime">
+
 ${expireText}
+
 </div>
 
+<hr>
+
 <div class="remainTitle">
+
 使用可能残量
+
 </div>
 
 <div class="remainValue">
+
 ${remain.toFixed(0)} L
+
 </div>
 
 `;
+    
+
   
 const formula=
 document.getElementById("formula")
