@@ -9,11 +9,12 @@
 <style>
 
 body{
-font-family:Arial;
+font-family:"Yu Gothic UI",Arial,sans-serif;
 margin:0;
-padding:16px;
-background:#f7f7f7;
-transition:0.5s;
+padding:20px;
+background:#f2f5fa;
+color:#333;
+transition:0.3s;
 }
 
 body.safe{
@@ -29,17 +30,17 @@ background:linear-gradient(135deg,#ff4d4d,#ff0000);
 }
 
 .container{
-max-width:700px;
+max-width:760px;
 margin:auto;
 }
 
 .card{
-background:white;
-border-radius:14px;
-padding:18px;
-box-shadow:0 6px 18px rgba(0,0,0,0.08);
+background:#fff;
+border-radius:18px;
+padding:24px;
+box-shadow:0 8px 24px rgba(0,0,0,.08);
 }
-
+    
 .result{
 margin-top:12px;
 padding:12px;
@@ -49,32 +50,39 @@ font-weight:bold;
 }
 
 label{
-    display:block;
-    font-size:18px;
-    font-weight:bold;
-    color:#1565c0;
-    margin-top:10px;
-    margin-bottom:4px;
+display:block;
+font-size:17px;
+font-weight:bold;
+color:#1565c0;
+margin-top:14px;
+margin-bottom:6px;
 }
     
 input,
 select{
     width:100%;
-    padding:14px;
+    padding:16px;
     margin-top:4px;
-    border-radius:10px;
-    border:2px solid #ccc;
+    border:2px solid #d6dce5;
+    border-radius:12px;
     box-sizing:border-box;
     font-size:18px;
+    background:#fff;
+    transition:0.2s;
 }
 
+input:focus,
+select:focus{
+    outline:none;
+    border-color:#1976d2;
+    box-shadow:0 0 0 3px rgba(25,118,210,0.15);
+}
+    
 #mode{
-    font-size:20px;
-    padding:12px 16px;
-    min-height:58px;
-    height:auto;
-    line-height:1.4;
-    font-weight:bold;
+font-size:20px;
+font-weight:bold;
+background:#f7fbff;
+border:2px solid #1976d2;
 }
     
 #safe{
@@ -83,17 +91,13 @@ font-weight:bold;
 }
 
 .calcBtn{
-    width:100%;
-    padding:15px;
-    font-size:20px;
-    font-weight:bold;
-    border:none;
-    border-radius:12px;
-    background:#1976d2;
-    color:white;
-    margin-top:18px;
+padding:18px;
+font-size:22px;
+font-weight:bold;
+border-radius:14px;
+box-shadow:0 4px 10px rgba(25,118,210,.25);
 }
-
+    
 .calcBtn:active{
     transform:scale(.98);
 }
@@ -108,15 +112,11 @@ margin-top:8px;
 }
 
 .miniBtn{
-flex:1;
-margin-top:0;
-padding:10px;
-background:#1976d2;
-color:white;
-border:none;
-border-radius:8px;
-font-size:16px;
-cursor:pointer;
+padding:14px;
+font-size:17px;
+font-weight:bold;
+border-radius:10px;
+transition:.2s;
 }
 
 .miniBtn:hover{
@@ -193,10 +193,12 @@ border-left-color:#ff9800;
 }
 
 .result{
-    margin:18px auto 0;
-    max-width:450px;
-    padding:18px;
-    border-radius:16px;
+margin-top:20px;
+padding:24px;
+border-radius:18px;
+background:#f8fbff;
+border:2px solid #cfe3ff;
+box-shadow:0 6px 15px rgba(0,0,0,.05);
 }
 
 .resultTitle{
@@ -255,11 +257,12 @@ border-left-color:#ff9800;
 }
 
 h1{
-    text-align:center;
-    font-size:26px;
-    line-height:1.3;
-    margin-bottom:18px;
-    color:#1565c0;
+text-align:center;
+font-size:28px;
+font-weight:700;
+line-height:1.3;
+color:#1565c0;
+margin-bottom:24px;
 }
     
 </style>
@@ -271,7 +274,13 @@ h1{
 <div class="container">
 <div class="card">
 
-<h1>ME版 搬送用酸素ボンベ残量シミュレーター</h1>
+<h1>
+
+ME版<br>
+
+搬送用酸素ボンベ残量シミュレーター
+
+</h1>
 
 <label>モード</label>
 
