@@ -2380,7 +2380,9 @@ const time =
 
 usable
 /
-oxygenFlow;
+oxygenFlow
+/
+SAFETY_FACTOR;
 
 
 
@@ -2486,22 +2488,11 @@ const total =
 Math.floor(time*60);
 
 
-
-const hour =
-Math.floor(total/60);
-
-
-
-const min =
-total%60;
-
-
-
 let remainText;
+
 
 remainText =
 total + "分";
-
 
 
 
@@ -2628,7 +2619,7 @@ ${usable.toFixed(0)} L
 
 <b>＜使用可能時間＞</b><br>
 
-使用可能残量÷酸素消費量
+使用可能残量÷酸素消費量÷安全係数
 
 
 <br><br>
@@ -2640,7 +2631,9 @@ ${usable.toFixed(0)}
 
 ${oxygenFlow.toFixed(2)}
 
+÷
 
+${SAFETY_FACTOR}
 
 
 `;
