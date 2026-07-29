@@ -1860,26 +1860,23 @@ btn.textContent =
 
 ====================================================*/
 
-
 function toggleFormula(){
-
-
-const formulaBtn =
-document.getElementById("formulaBtn");
 
 const formula =
 document.getElementById("formula");
 
+const btn =
+document.getElementById("formulaBtn");
 
-if(formulaBtn && formula){
 
-formulaBtn.style.display="block";
+if(formula.style.display==="block"){
 
-}
+
+formula.style.display="none";
+
 
 btn.textContent =
 "計算方法を表示";
-
 
 
 }else{
@@ -1894,9 +1891,8 @@ btn.textContent =
 
 }
 
-
-
 }
+
 
 /*====================================================
  ⑦ 酸素消費量計算
