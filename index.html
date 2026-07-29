@@ -2386,6 +2386,23 @@ SAFETY_FACTOR;
 
 
 
+/*====================================================
+  表示用時間（分）
+
+====================================================*/
+
+
+const total =
+Math.floor(time*60);
+
+
+let remainText;
+
+
+remainText =
+total + "分";
+
+
 
 
 /*====================================================
@@ -2405,6 +2422,7 @@ now.getTime()
 +
 total*60*1000
 );
+
 
 
 
@@ -2480,20 +2498,6 @@ result.className=
 
 
 }
-
-
-
-
-const total =
-Math.floor(time*60);
-
-
-let remainText;
-
-
-remainText =
-total + "分";
-
 
 
 
