@@ -1223,6 +1223,11 @@ Googleフォームを開く
 </p>
 
 
+<!--====================================================
+ ⑫-1　　ECMOチェックリスト
+  　　　ここから先を編集してください
+
+====================================================-->
 
 
 
@@ -1258,17 +1263,21 @@ text-align:center;
 
 <div id="checkList">
 
-
-
 <div class="checkCard">
 
+<label>
 
-<div class="checkTitle">
+<input
+type="checkbox"
+onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
 
-□ プライミングライン
+<span class="checkTitle">
 
-</div>
+① プライミングライン
 
+</span>
+
+</label>
 
 <div class="checkNote">
 
@@ -1276,58 +1285,255 @@ text-align:center;
 
 </div>
 
-
 </div>
-
-
 
 
 <div class="checkCard">
 
+<label>
 
-<div class="checkTitle">
+<input
+type="checkbox"
+onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
 
-□ 気泡検出機能付き流量計
+<span class="checkTitle">
 
-</div>
+② 気泡検出機能付き流量計
 
+</span>
+
+</label>
 
 <div class="checkNote">
 
 送血回路（人工肺後）についているか
 
+<br>
+
+※流れの向きも確認
+
 </div>
 
-
 </div>
-
-
 
 
 <div class="checkCard">
 
+<label>
 
-<div class="checkTitle">
+<input
+type="checkbox"
+onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
 
-□ P1～P3 圧力センサ
+<span class="checkTitle">
 
-</div>
+③ P1～P3 圧力センサ
 
+</span>
+
+</label>
 
 <div class="checkNote">
 
-ゼロ点確認
+正しく測定できているか
+
+<br>
+
+※プライミング前にゼロ点確認
+
+</div>
 
 </div>
 
 
+<div class="checkCard">
+
+<label>
+
+<input
+type="checkbox"
+onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
+
+<span class="checkTitle">
+
+④ 遠心ポンプ回転数
+
+</span>
+
+</label>
+
+<div class="checkNote">
+
+<b style="color:#1565c0;">
+2000～3000 rpm
+</b>
+
+<br>
+
+（最大5000 rpm）
+
+</div>
+
 </div>
 
 
+<div class="checkCard">
 
+<label>
+
+<input
+type="checkbox"
+onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
+
+<span class="checkTitle">
+
+⑤ 補助循環流量
+
+</span>
+
+</label>
+
+<div class="checkNote">
+
+<b style="color:#1565c0;">
+2～3 L/min
+</b>
+
+<br>
+
+30～50 mL/kg/min
 
 </div>
 
+</div>
+
+
+<div class="checkCard">
+
+<label>
+
+<input
+type="checkbox"
+onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
+
+<span class="checkTitle">
+
+⑥ ガス流量
+
+</span>
+
+</label>
+
+<div class="checkNote">
+
+目標
+
+<br>
+
+<b style="color:#1565c0;">
+
+血液流量：ガス流量＝1：1
+
+</b>
+
+</div>
+
+</div>
+
+
+<div class="checkCard">
+
+<label>
+
+<input
+type="checkbox"
+onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
+
+<span class="checkTitle">
+
+⑦ アラーム
+
+</span>
+
+</label>
+
+<div class="checkNote">
+
+気泡検知器・P1～P3
+
+<br>
+
+ONになっているか
+
+</div>
+
+</div>
+
+
+<div class="checkCard">
+
+<label>
+
+<input
+type="checkbox"
+onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
+
+<span class="checkTitle">
+
+⑧ ACT
+
+</span>
+
+</label>
+
+<div class="checkNote">
+
+<b style="color:#ff9800;">
+
+180～200秒
+
+</b>
+
+<br>
+
+150秒以下にしない
+
+</div>
+
+</div>
+
+
+<div class="checkCard">
+
+<label>
+
+<input
+type="checkbox"
+onchange="this.closest('.checkCard').classList.toggle('done',this.checked)">
+
+<span class="checkTitle">
+
+⑨ PO₂
+
+</span>
+
+</label>
+
+<div class="checkNote">
+
+<b style="color:#ff9800;">
+
+200～400 mmHg
+
+</b>
+
+<br>
+
+SpO₂は右手測定が望ましい
+
+</div>
+
+</div>
 
 </div>
 
