@@ -2436,7 +2436,7 @@ if(time<30){
 
 
 status=
-'<span class="status danger">🚨 交換してください</span>';
+'<span class="status danger">🚨 交換推奨</span>';
 
 
 document.body.classList.add("danger");
@@ -2575,12 +2575,12 @@ ${selectedMode==="normal" ?
 "酸素流量"
 :
 selectedMode==="nppv" ?
-"（分時換気量×FiO₂補正）＋（リーク量×0.25）×リーク補正係数"
+"（ 分時換気量 × FiO₂補正 ）＋（ リーク量 × 0.25 ）× リーク補正係数"
 :
 selectedMode==="ecmo" ?
 "ECMO酸素流量"
 :
-"分時換気量×FiO₂補正"
+"分時換気量 × FiO₂補正"
 }
 
 <br><br>
@@ -2593,8 +2593,8 @@ selectedMode==="ecmo" ?
 
 <b>＜使用可能残量＞</b><br>
 
-(ボンベ圧-2)÷14.7×容量<br>
-=使用可能残量
+(ボンベ圧-2) ÷ 14.7 × 容量 <br>
+= 使用可能残量
 
 <br><br>
 
@@ -2612,8 +2612,8 @@ selectedMode==="ecmo" ?
 
 <b>＜使用可能時間＞</b><br>
 
-使用可能残量÷酸素消費量÷安全係数<br>
-=使用可能時間（分）
+使用可能残量 ÷ 酸素消費量 ÷ 安全係数<br>
+= 使用可能時間（分）
 
 
 <br><br>
@@ -2627,7 +2627,7 @@ ${oxygenFlow.toFixed(2)}
 
 ÷
 
-${SAFETY_FACTOR}
+${SAFETY_FACTOR}<br>
 
 =
 
