@@ -2357,8 +2357,9 @@ usable
 /
 oxygenFlow
 /
-SAFETY_FACTOR;
-
+SAFETY_FACTOR
+/
+60;
 
 
 /*====================================================
@@ -2368,7 +2369,7 @@ SAFETY_FACTOR;
 
 
 const total =
-Math.floor(time*60);
+Math.floor(time);
 
 
 let remainText;
@@ -2433,7 +2434,7 @@ let status="";
 
 
 
-if(time<0.5){
+if(time<30){
 
 
 status=
@@ -2447,7 +2448,7 @@ result.className=
 
 
 
-}else if(time<1){
+}else if(time<60){
 
 
 status=
@@ -2598,7 +2599,8 @@ ${usable.toFixed(0)} L
 
 <b>＜使用可能時間＞</b><br>
 
-使用可能残量÷酸素消費量÷安全係数
+使用可能残量÷酸素消費量÷安全係数=
+使用可能時間（分）
 
 
 <br><br>
